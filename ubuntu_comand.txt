@@ -1,0 +1,588 @@
+
+
+cd						# Change Dir #move to the 
+
+pwd 						# вывести путь где мы сейчас
+
+gedit						# prog
+
+ls						#
+ls -l						# list (nice)
+ls -a						#
+ls -la						# list
+ls -ls -R /					# look all files on your comp
+ls -R						# look in my dir all my dir in my dir
+ls -Rla	dir4					# look on
+
+
+echo $PATH					# Path
+echo						# text
+
+man -k uptime					# find all commands with "uptime"
+man uptime					# help for "uptime"   #in site of text to find /system  # q exit
+info uptime					# info
+
+whatis uptime					# what is
+whereis						# where is
+locate uptime					# locate
+
+
+
+ctrl + z					# send process on background
+fg						# show process background
+ctrl + c					# cancel the process
+ctrl + d					# delete
+
+
+ping www.google.com				# ping google
+
+ps						# What is runing now
+
+
+cat readme.txt					# Read all text on file
+
+more readme.txt					# Read only % from text and next -> ENTER
+
+less						# Read document on andere window # q -> quit  # / find or /* find
+
+
+
+touch 						# Create New File
+
+mkdir						# Make Dir
+mkdir -p dir4/dir5				# create a new dir4 and in that dir5
+
+mv ../test1.py test.py				# Move Rename
+mv secret.txt .secret.txt			# you can't see whis file
+mv dir1 newdir1					# rename dir1 to newdir1
+
+rm -r week1 					# Remove Delete 
+rm *						# Delete all files
+rm Dir2/*					# remove all files on dir2
+rmdir dir1					# remove dir1 just Empty
+rm -R newdir*					# remove all directory which name is starting with newdir
+sudo rm -R / --no-preserve-root			# pizdec linuxu delete all system
+
+cp
+cp 						# copy
+cp  text.txt ~/Desktop/				# copy file text.txt on desktop
+cp tex* dir2					# copy all doc with tex and "." dir2
+cp tex?.txt -v ~/Desktop/			# -v show process of copy #"?" luboi simvol
+cp -R Dir1 Newdir				# copy dir1 to Newdir
+
+
+ln -s /home/marat/Documents/dir4 mylinkdir4	 # create shortlink 'yarlik' 
+ln file.txt duplicate.txt			# create file duplicate
+
+
+find 						# look 'man find'			
+find /home -name "*.txt"
+ 
+wc text.txt					# how many lines, words and simbol(bytes)
+wc -l						# just lines
+wc -w						# just words
+
+
+sort names.txt					# like a cat + sort
+sort -n numbers.txt				# 
+
+
+
+cut -d ">" -f 3 file.txt			# cut (-d po razdelityalu '>') , (-f razdelilo na bloki i nam nado blok 3) from file.txt 
+
+
+cut -d ">" -f 3 file.txt | sort | wc		# after cut do sort '|'  # you can do with '|' how many comand you want
+
+
+#########################################################################################
+
+					GREP
+
+grep linux ./*					# find word'linux'	 in ./* in all file and all dir
+
+grep -i linux ./*				# -i ignor LINUX or linux
+
+grep [A-Za-z].gov				# any letter from A-Z and a-z and then .gov
+
+grep -E "[A-Za-z]*.gov' mydatafile.txt		#
+
+grep -E "[A-Za-z\._-]@[A-Za-z]*.gov' mydatafile.txt	#
+
+grep -E -E "(.gov|.com)" mydatafile.txt	# "|" it is "or"
+
+grep [0-9]*
+
+grep marat /etc/* 2> errors.txt			# stream 1 gut 2 error , and write errors in file errors.txt
+
+grep marat /etc/* 2> /dev/null			# streame all errors in null(0) dir
+
+grep marat /etc/* > good.txt 2> nogood.txt	# save good stream on good.txt and no_good on nogood.txt
+
+grep /etc/* &> results.txt			# save all streams on file results.txt
+
+#########################################################################################
+
+					SAVE
+
+''''''''''''''''''''''''''''''''''''''''''>
+''''''''''''''''''''''''''''''''''''''''''>>
+
+
+sort names.txt > names_sorted.txt		# create file and sorted names write there
+
+sort -n numbers.txt >> names_sorted.txt		# .append from 1 file to second
+
+
+
+#########################################################################################
+
+					TAR
+
+tar tf mytar.tar			# show what is inside
+
+
+tar cf mytar.tar dir1			# create arhive create file  
+
+tar cvf mytar.tar dir1			# v - show how it is creating
+
+gzip mytar.tar				# zip myfile*
+gunzip	mytar.gz			# unzip myfile*
+
+bzip2 mytar.tar				# zip 
+bunzip2 mytar.tar.bz2			# unzip
+
+xz mytar.tar				#
+unxz mytar.tar.xz			#
+
+
+tar cvzf mygzip.gz dir1			# create *gz
+
+tar cjf mybzip.bz2 dir1			# *bz2
+
+tar cJf myxz.xz dir1			# *xz
+
+
+tar xf my bzip.bz2			# UNZIP 
+
+
+zip -r myzip.zip dir1			# *ZIP
+unzip myzip.zip				# unzip
+
+##################################################################################################
+
+					TOP
+
+
+top					# my processing # 'P' filter on CPU or 'M' %MEM # 'q' quit
+
+
+free					# how many  mem and swap (memory) (bytes)
+free -h					# (for human)
+
+ps					# show processes
+
+ps -u marat				# ps +'name of the user' show all processes of this user
+ps aux					# show all processes of all users
+
+ps aux | grep bash 			# find all bash processes from all users 
+
+ps aux | grep marat			# find all processes from user: marat
+
+
+#####################################################################################################
+
+					LOGs
+
+cd ~					#
+cd /var					# where is all logs
+cd log					#
+
+dmesg					# log linux virtual memory
+dmesg | grep sda			# log 1 disk
+
+######################################################################################################
+
+					EDIT	files 
+
+gedit					# grafic redactor
+
+nano					# nano best of nografic
+nano newfile.txt			# or create file or open 
+
+pico					#
+
+vi					# old text editor # to start 'i' # to correct esc # type '/' to comand (:wq 1.txt) (:q!)
+
+touch readme.md				# *md -> vim
+
+vi		Vim это самый лучший редактор. Я в нем программирую и это очень удобно. Если в нано чтобы удалить строку нужно передвигать курсор в конец строки и тыкать backspace, то в виме достаточно нажать dd. Можно удалить 5 строк просто командой 5dd. Я могу удалить три след. слова командой 3dw. Я могу передвигаться по тексту по словам используя команду w. Я могу заменить букву под курсором на букву Л, просто нажав rЛ. Я могу перейти в конец строки и начать дописывать текст, просто нажав большую A. Я могу перейти в начало строки и дописывать текст, просто нажав большую I. Я могу перейти в конец файла, нажав G, или в начало файла, нажав gg или 1G. Я могу дописать в свой .vimrc 'set number' и 'syntax on', в результате чего мне будет подсвечиваться синтаксис и будут показываться номера строк. Я могу перейти к началу любой строки, нажав номер этой строки и букву G. Я могу удалить все символы от курсора до конца строки, нажав d$. Я могу удалить все символы от курсора до начала строки, нажав d^. Если я вижу, что мой код не совсем верно выровнен(в плане табуляции), то я могу выровнять его просто нажав =. Я могу как захочу регулировать размер одной табуляции, просто дописав в свой .vimrc 'set tabstop=4' или не 4, а любое другое количество символов. Я могу сделать стобы табуляция заменялась пробелами(и все же предпочитаю табуляцию). Я могу очень просто сделать из своего vim'a полноценную IDE. Достаточно забиндить команду make на F4 и при нажатии F4 моя программа скомпилируется. Я могу запустить ее прямо из вима, просто прописав 
+:!./имя_программы.
+Я могу прямо из вима обновить свой репозиторий на гитхабе, просто прописав
+:!git commit -am 'commit'
+:!git push
+Или установить плагин интеграции с гитхабом и делать это еще проще. Я могу установить любую цветовую схему на вим. Я поставил плагин auto-pairs и теперь когда я пишу скобку '(', автоматически добавляется парная скобка ')' и курсор устанавливается между этими скобками. В программировании очень удобно. Я поставил плагин YouCompleteMe и теперь у меня есть автодополнение для языка Си. При чем плагины устанавливаются просто указанием репозитория на гитхабе в .vimrc, благодаря такой штуке как vim-plug. На самом деле вим - это самый удобный текстовый редактор, изобретенный человечеством.
+
+
+
+######################################################################################################################
+
+							Accounts
+
+
+cat /etc/passwd			# show users	
+
+sudo cat /etc/shadow		# show pass of users
+
+cat /etc/group			#show group		
+
+whoami  				# показать имя текущего пользователя
+id 					# показать к каким группам принадлежит пользователь
+id vasya				#
+ 
+who					# показать кто сейчас в системе
+w					# показать кто сейчас в системе и что делает
+
+last					# показать последние логины
+su marat				# switch user # change account
+exit					# back to first user
+
+/etc/skel 				# это шаблон домашней директории
+
+sudo useradd -m user1			# CREATE user
+
+sudo passwd user1			# CREATE pass
+
+sudo userdel user1			# delete user1
+sudo userdel -r user1			# delete all files from this user
+
+
+sudo groupadd programmers		# create group
+
+sudo groupdel programmers		# delete group
+
+usermod –aG Programmers vasya		# добавить юзера vasya в группу Programmers
+usermod –aG sudo vasya			# add admin
+deluser vasya Programmers		# удалить юзера vasya  из групы Programmers
+
+######################################################################################################################
+
+						ls -l
+
+-rw-r--r-- 1 marat marat 44271 Apr  8 15:15 file1.txt
+drwxr-xr-x
+
+-			# d -  dir
+	FIRST *user
+
+r 			read
+w 			write
+-			# x  -> can run
+
+	Second *group
+r 			read
+- 			None
+-			None
+
+	Other *all other
+r 			read
+- 			None
+-			None
+
+1 			just 1 copy 
+
+marat 			user
+marat 			group 
+
+44271			size
+
+Apr			month
+8			date
+15:15 			wen create
+file1.txt		name
+
+###################################################################################################################
+
+					file mod
+
+chown 					изменить владельца файла / директории
+chgrp					изменить группу файла / директории
+сhmod					изменить права доступа на файл / директорию
+
+chmod o+x file1.txt			# change rights for group o(other) to x for file1.txt
+
+chmod  ugo+x  myfile.txt   		довавить X всем (u - user, g - group, o -other)
+сhmod  g-rw   myfile.txt   		убрать RW у группы
+chmod  o=rw   myfile.txt   		установить RW всем остальным
+ u = user
+ g = group
+ o = other
+ a = ugo
+
+
+chmod  777   myfile.txt   		установить RWX всем
+chmod  741   myfile.txt  		установить:   RWX   владельцу, R - -    группе,  - - X   всем остальным
+r = 4
+w = 2
+x = 1
+
+
+sudo chmod o+t				включить StickyBit
+sudo chmod o-t				выключить StickyBit
+chmod  1777 myDir    			включить StickyBit
+chmod 0777 myDir    			выключить StickyBit
+
+#############################################################################################################
+
+					
+
+
+ip a						показать мой IP адресс
+ip addr show					показать мой IP адресс
+
+mtr google.com					указывает маршрут прохождения трафика от  вашего ПК  до сервера и процент падения скорости
+ip route show					показать адресс раутера Gateway
+ping						протестировать коннекшен к адрессу
+ping -c 4 8.8.8.8				4 times pinging the server
+ping -c 4 google.com
+				
+host www.mocrosoft.com				дать IP адресс вэб сайта
+dig						дать IP адресс вэб сайта more info
+#no found# netstat						выдать сетевые подключения компьютера
+
+
+sudo ufw allow 22				open port 22
+
+sudo apt-get install openshh-server
+
+ssh VirtualBox					connect to computer
+
+#################################################################################################
+
+
+				Download and Install
+
+
+wget							скачать файл из интернета
+wget http://google.com/1.jpg				write full adress
+
+
+			Ubuntu/Debian/Kali/Mint Linux:
+
+apt-get install						скачать и установить программу
+sudo apt-get install chromium-bsu			
+whereis chromium-bsu					where is 'prog'
+
+sudo apt-get remove chromium-bsu			удалить программу
+
+sudo dpkg –i 'prog name' 				установить программу из файла .deb
+
+sudo dpkg –r 'prog'					удалить программу
+
+sudo shutdown now					swich off
+
+			RedHat/CenOS Linux:
+
+yum install          - скачать и установить программу
+yum remove         - удалить программу
+rpm –i                  - установить программу из файла .rpm
+rpm –e                 - удалить программу
+
+#####################################################################################################
+
+				Scripts	
+
+nano myscript1.sh					#create filescript with nano redactor
+
+#!/bin/bash						# first line allways write this
+
+
+echo "Hello, this is Messege from Script"		#
+echo "Let's show in this folder..."			#
+ls -l							#
+xterm &							# run terminal
+echo "Done"						#
+
+bash myscript1.sh					# to run script
+
+sudo chmod a+x myscript1.sh				# change mod to x for all users
+./myscript1.sh						# run script
+
+
+
+
+#!/bin/bash
+
+mycomputer="lenovo g510"
+myOS=`uname -a`
+
+echo "this script name is $0"
+echo "privet $1"					# 
+echo "Hello $2"						#
+
+num1=50
+num2=45
+summa=$((num1+num2))
+
+echo "$num1 + $num2 = $summa"
+
+myhost=`hostname`					# special simbol ` (have to be green)
+mygtw="8.8.8.8."
+
+ping -c 4 $myhost
+ping -c 4 $mygtw
+
+
+
+chmod a+x my2.sh			
+./my2.sh Vasya Petya					# run with peremennie $1 and $2
+
+############################################################################################
+
+
+#!/bin/bash						#
+
+if [ "$1" == "Vasya" ]; then				# if to open
+        echo "Privet  $1"
+elif [ "$1" == "Tramp" ]; then
+        echo  "Hello $1"
+else echo "Zdarova $1"
+fi							# fi to close
+
+
+x=$2							# fix parameter 
+or
+read -p "Enter something: " x				# parameter from user in "x"
+
+
+echo "Starting Case selection"
+
+case $x in 						# case to open
+        1) echo "this is one;;
+        [2-9]) echo "Two-Nine";;
+        "Petya") echo "Privet $x";;
+        *) echo "parameter Unknown, sorry!"
+esac							# esac to close
+
+
+################################################################################################
+
+#!/bin/bash
+
+Counter=0
+
+while [ $Counter -lt 10 ]; do
+        echo "Current counter is $Counter"
+        Counter=$(($Counter+1))
+        # let Counter=Counter+1
+        # let Counter+=1
+done
+
+
+for myfile in `ls *.txt`; do
+        cat $myfile
+done
+
+
+for x in {1..10}; do
+        echo "X = $x"
+done
+
+
+for (( i=1; i<=10; i++ )); do
+        echo "Nomer I = $i"
+done
+
+
+
+################################################################################################
+
+
+#!/bin/bash
+
+myfunc()
+{
+        echo "this is text from Func!"
+        echo "First parameter is: $1"
+        echo "Second parameter is: $2"
+
+}
+
+
+myfunc 50 vasya
+
+
+########################################
+
+#!/bin/bash
+
+summa=0
+
+myfunc()
+{
+        echo "this is text from Func!"
+        echo "num1 = $1"
+        echo "num2 = $2"
+        summa=$(($1+$2))
+
+}
+
+
+myfunc 50 20
+echo "Summa = $summa"
+
+
+.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
