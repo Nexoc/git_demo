@@ -1,0 +1,92 @@
+
+
+https://www.youtube.com/watch?v=hb1jtBm71MY
+
+						create new dics
+
+sudo fdisk -l
+
+lsblk								# show disk info
+
+sda, sdb, sdc
+s - sata
+d disk
+a, b, c - number
+
+
+sudo cfdisk /dev/sda/						# info about disk a (sda)
+								# if is new part you can do format
+
+dos # for both win and linux
+new # enter
+after all yes and enter have to push "write"
+
+
+sudo mkfs.ntfs -f /dev/sdb1			# make_file_system partition in *ntfs format which(sdb1)
+
+
+sudo mkdir hdd2
+sudo shmod 777 hdd2
+
+sudo nano etc/fstab				# have to change the parameter in this file
+
+
+
+
+<file system> <mount point> <type> <option> <dump> <pass>
+wich disc(sdb1)	where	     ntfs   default   0       0
+
+write after last line:
+
+/dev/sdb1 media/hdd2/ ntfs default 0 0
+
+
+or /dev/sdb1 -> number of disk like UUid=7861111d-6a0c-49a6-b0cd-015fd5e0699a
+
+CLTR + O #save
+CLTR + X #exit
+
+right mause on disc unmount and in terminal:
+
+sudo mount /media/hdd2
+
+ln -s /media/hdd2 ~Desktop/HDD2		# link for this disc on my desktop with name HDD2
+
+start terminal - ctrl+alt+t
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

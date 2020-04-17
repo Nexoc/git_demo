@@ -1,0 +1,95 @@
+
+
+sudo apt-get install git
+
+git					# all comand
+
+mkdir git_demo
+cd git_demo
+
+git init					# make git here
+ls -la						# .git
+
+git status
+
+touch hello.txt
+
+git add hello.txt				# add file hello.txt to git
+
+git config					# config
+
+git config --global user.email "dav@mail.com"	#
+
+git confog --global user.name "Mar"		#
+
+git commit -m "Added hello.txt"			# make commit
+
+git log						# log
+
+nano hello.txt					# you have to chenge samething and save
+
+git add hello.txt				# it is no kommit it is just save in git the changes
+
+git commit -m "Added some text in file"		# make commit
+
+git log
+
+nano hello.txt					# write
+
+git commit -am "Added some more text in file"	# commit with "add"(a add, m message) allready
+
+nano hello.txt
+
+git diff					# show last changes diffrents
+
+git checkout					# then not commited, delete all changes until last commit
+
+git checkout hello.txt				# go back to last saves version. 
+
+git chechout a9541348a3039454f7abb57819c294842f112764	# go to the this position
+
+git reset --hard					# hz
+
+git checkout master					# change on master profil
+
+git branch						# show how many branch on tree you have
+
+git branch about_js 					# create new branch
+
+git branch -r						# show brange on github.com
+
+git checkout about_js					# change to branch about_js
+
+git remote						# show internet repository
+
+git remote add origin git@github.com:Nexoc/git_demo.git	 # create connect comp <-> github
+
+git remote -v 						# 
+
+git fetch origin
+
+git push -u origin master				# git push, -u update, origin where, master branch.
+
+git pull
+
+git clone http://github.com/..someaddres		# clone reposotiry					
+
+git merge						# merge 1branch -> * <- 2branch
+
+
+
+
+
+
+
+
+VirtualENV 
+https://www.youtube.com/watch?v=5DuudrU7jK0
+
+
+
+
+
+
+
+

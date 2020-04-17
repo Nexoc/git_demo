@@ -52,7 +52,8 @@ touch 						# Create New File
 mkdir						# Make Dir
 mkdir -p dir4/dir5				# create a new dir4 and in that dir5
 
-mv ../test1.py test.py				# Move Rename
+mv ../test1.py test.py				# Move Rename mv probe.py git_demo/probe.py
+
 mv secret.txt .secret.txt			# you can't see whis file
 mv dir1 newdir1					# rename dir1 to newdir1
 
@@ -531,7 +532,7 @@ myfunc 50 20
 echo "Summa = $summa"
 
 
-.
+
 
 
 
