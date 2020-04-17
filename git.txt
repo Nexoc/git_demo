@@ -60,6 +60,8 @@ git branch -r						# show brange on github.com
 
 git checkout about_js					# change to branch about_js
 
+git checkout --index.html				# !delete last changes. go back
+
 git remote						# show internet repository
 
 git remote add origin git@github.com:Nexoc/git_demo.git	 # create connect comp <-> github
@@ -78,13 +80,25 @@ git merge						# merge 1branch -> * <- 2branch
 
 
 
+create your commands in file .gitconfig
+
+s = status --short
+
+st = status
+
+l = log --oneline --graph --decorate --all
+
+g = log --graph --abbrev-commit --decorate --all --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(dim white) - %an%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n %C(white)%s%C(reset)'
+
+br = branch
+
+co = checkout
 
 
 
 
 
-VirtualENV 
-https://www.youtube.com/watch?v=5DuudrU7jK0
+
 
 
 

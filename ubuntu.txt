@@ -2,7 +2,7 @@
 
 https://www.youtube.com/watch?v=hb1jtBm71MY
 
-						create new dics
+						create new disc
 
 sudo fdisk -l
 
