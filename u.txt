@@ -1,0 +1,458 @@
+udef this is ex Devfs
+
+montage in /dev
+
+mem					fisical memory PC
+null					null
+pts/					psevdoterminals
+urandom					generator couter
+sdx					block 
+tty					apparat terminal
+
+
+
+Sysfs
+
+/sys
+
+devices/
+bus/
+drivers/
+block/
+class/
+
+
+Procfs
+
+/proc
+
+PID/
+cpuinfo/
+devices/
+mounts/
+sys/
+
+
+
+whoami				#
+hostname			
+date				# date
+uname				# sys name
+passwd				# change pass
+touch			
+last
+
+whoami --help
+hostname  --help | less		# show in new window
+
+
+
+#############################################################################
+
+					man
+
+SECTIONS
+
+ 1. Executable programs or shell commands				# user command
+ 2. System calls (functions provided by the kernel)
+ 3. Library calls (functions within program libraries)
+ 4. Special files (usually found in /dev)				# devices
+ 5. File formats and conventions eg /etc/passwd				# config files
+ 6. Games
+ 7. Miscellaneous (including macro packages and conventions), e.g. man(7), groff(7)
+
+ 8. System administration commands (usually only for root)		# sysadmin command
+ 9. Kernel routines [Non standard]
+
+
+man 8 useradd						# info about how sysadmin(8) add user
+
+man -a passwd						# info -a (all) about pass
+
+
+man -k user						# info about all command whith "user"
+
+man -k user | grep 8					# "grep 8" all command from sysadmin
+
+work just in sentOS su -				# password and you are on "root mode" # after to exit write exit
+
+
+apropos user 						# same like "man -k user"
+
+################################################################################################
+
+					--help
+
+passwd --help						# show shortly info how to use this command
+
+#############################################################################################
+
+
+bash tab conpletion					# 2 click TAB if you want info about command
+
+history 
+
+
+redirection
+						
+# STBIN(input, your keybord)	<  	# use maus or keybord
+# STBOUT(out)			> >> 	# overwriting to > and append to >>
+# STBERR(err)			2> 	# to send error to 
+
+
+piping it is "|"
+
+ls | less				 # ls will be filtred with less
+
+ps aux | grep httpd			# show all process and filtred by grep (with word httpd)
+
+
+
+ls > listfile				# STBOUT redirect your command to file
+
+find /proc -name "cpu*" 2>/dev/null	# redirect all error to null device
+
+man -k user | wc			# wc -how many 'lines' 'words' 'literal'
+
+
+history					# history of your all command
+
+
+###################################################################################################
+
+				bash shell scripts
+
+echo who > myscript
+echo ls >> myskript
+cat myskript
+chmod +x myscript
+./myscript
+
+#####################################################################################################
+
+man hier				
+
+#################################################################################################
+					LS list
+ls --help
+ls
+ls -l		# long
+ls -a		# show all files, included hide files
+ls -la
+ll
+ls -lrt		# sort by time
+ls -l /etc
+ls -ld /etc	# dir	
+
+#################################################################################################
+
+					globbing	
+
+*					# ls a* any character (all command beginimg with a)
+?					# ls ca? 3 character, first second ca and third ? 
+[a-b]					# ls ca[bt] it is or b or r, [b-t] from b to t
+
+ls [a-d]??* 
+
+ls -d a*    				# ls any directory with name a*
+ls -d a????*				# ls any dir with a* minimum literals a+(4?) and maybe more
+ls -d a[dn]*				# ls dir a+[d or n] + any
+ls -R					# that is inside
+
+#################################################################################################
+
+
+					cp - copy
+
+cp [OPTION]... [-T] SOURCE DEST
+  or:  cp [OPTION]... SOURCE... DIRECTORY
+  or:  cp [OPTION]... -t DIRECTORY SOURCE...
+
+
+cp --help
+
+sudo cp /etc/hosts .
+
+cp /etc/hosts ~/files/			# ~/files/  have to be with / closed, or it will be not directory, it's will be file
+
+sudo rm -rf tmp
+
+
+###################################################################################################
+
+
+mkdir date				# make dir
+
+mkdir -p file/data			# -p path (with out does not work)
+
+mkdir -p photos/2017			# same
+
+rmdir date				# it's works just wen it' empty
+
+rm -rf
+
+####################################################################################################
+
+				Absolute and Relative Paths
+
+/tmp/data/files/pete				# absolute path
+
+################################################################################################
+
+					moving files with mv
+
+mv testfile anotherfile				# rename
+
+mv /tmp/testfile ~				# move to the home directory
+
+############################################################################################
+
+					remove
+
+
+rm anotherfile				# remove files
+rm -r etc				# remove directory this question 
+rm -rf etc				# with out question
+rm -- -myfile				# if you want to remove file with "-" you have to write --
+
+###############################################################################################
+
+					Link
+
+link 
+-hard link
+-symbolic link
+
+
+ln /etc/hosts myhosts				# create hard link
+ls -il /etc/hosts myhosts			# show inote number(file id) and more info
+echo hallo >> myhosts				# add in file hallo
+ls -il						# show both files is changed
+
+
+ln -s myhosts symhosts				# create soft link
+ls -il /etc/hosts myhosts symhosts		# what is differences
+
+ln -s /etc etc
+rm etc						# they ask to remove sombolic link
+
+###############################################################################################
+
+					find							
+
+find /etc -name hosts					# find name host
+
+find /etc -name "*hosts*"				# words with name *hosts*	
+
+find / -user "marat"					# 
+
+man find						# 
+
+
+find /etc -name "*hosts*" -exec cp {} find/names \;	# find in etc name host -exec it is do -> what do? cp {} find/names
+
+
+
+find /etc -size +100k -exec cp {} find/size \;
+
+-size n[cwbkMG]
+              
+              suffixes can be used:
+              `b'    for 512-byte blocks 
+              `c'    for bytes
+              `w'    for two-byte words
+              `k'    for Kibibytes 
+              `M'    for  Mebibytes  
+              `G'    for Gibibytes 
+
+
+find /etc -exec grep -l marat {} \; 2>/dev/null
+
+
+find /etc -exec grep -l marat {} \; -exec cp {} find/contents/ \; 2>/dev/null
+
+
+find /etc -name "[ab]*" -exec cp {} tmp/files/ \;
+
+find tmp/files -name "c*" -exec mv {} tmp/files/photos \;
+
+find /etc -size -1000c -exec cp {} tmp/files/pictures/ \; 2>/dev/null
+
+ln -s var tmp/files/
+
+###############################################################################
+
+
+				VIM - VI
+
+command mode
+input mode
+
+how to start vi -> inputmode
+
+i		# inputmode
+o		# open new line
+O		# open a new line above the position
+[Ins] tap on keybord -> like i
+a		# append after position
+
+
+
+g 		# top of the document
+G		# bottom of the document
+pgd		# page down 
+pgu		# page up
+
+/yourtext	# find some text
+n		# next, find ->
+N		# find oposit direction
+:300		# go to number 300 of line
+v
+
+
+p
+
+how to start vi -> commandmode
+
+Esc
+:ZZ 		# save your text
+:wq!		# save your text "write quit"
+
+
+work with text:
+
+v		# visual (marking text)
+d		# delete
+y		# yank -> copy
+p		# past
+
+u		# undo (memory and you can go back <-)
+Ctrl-R		# redo ( go front wenn you go to far with undo)
+
+dd		# delete line
+x		# delete character
+gg 		# go to begining of the text
+G		# go on the end
+
+d$		# delete from your position all line on right site
+
+d^		# delete from your pos all line on the left site 
+
+:%s/drei/ZOPA/g	# change all words drei on ZOPA # with out g just first
+
+################################################################
+
+				less
+
+
+less /var/log/auth.log
+
+/root		# find root in this document. and use n for next "root"
+
+g		# to go on the TOP of the document
+G		# go to bottom
+
+
+#################################################################
+
+				cat and tac
+
+
+cat print file on terminal
+tac print file on the terminal back
+
+##############################################################
+
+			tail and head
+
+tail -n 5 /etx/passwd		# show last 5 lines off document
+
+head -n 5 /etc/passwd		# show first 5 lines
+
+
+wen you want just 4 line from document
+
+head -n 4 /etc/passwd | tail -n 1
+
+##########################################################################
+			grep
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
