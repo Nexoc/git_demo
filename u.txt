@@ -377,47 +377,87 @@ head -n 4 /etc/passwd | tail -n 1
 ##########################################################################
 			grep
 
+ps aux | grep cron | grep -v grep	# show all procceses and show just cron proc | dont show in this pocceses, procces this word grep
+
+
+####################################################
+
+			regular expretion
+
+man 7 regex
+
+^abc			# ^  line start with abc ( abcdeö )
+
+abc$			# $   line end with abc ( slknslknabc )
+
+a.b			# .   any character exept newline ( abc, aac, a2c, atc)
+
+1|8			# |	alternativ   or 1 or 8 ( 1, 8)
+
+ab{2}c			#  {}  explicit quantity of preceding character ( abbc )
+
+a[bB]c			# [] explicit set of characters to match (abc, aBc )
+
+(123){3}		# {} group of characters ( 123123123 )
+
+ab*c			# * Null or more of the preceding character ( ac, abc, abbbbbbbc )
+
+ab+c			# + One or more of the preceding character (abc, abbbbbc )
+
+ab?c			# ? Null or one of the preceding character (ac, abc )
+
+
+###########################################################################################
+
+				grep + regex
+
+grep 'abc$' grepfile1
+
+man -k user | egrep '1|8'		# extendert (exstandert)
+
+egrep '(123){3}' grefile1		# egrep 
+
+grep 'ab*c' grepfile1			# just grep
+
+
+###########################################################################################
+
+					cut - cat - awk - sed
+
+cut -d : -f 3 /etc/passwd | sort -n		# -d delimiter ':' column  -f ( look for trird  character and sort  -n -> by number) 
+
+cut -d : -f 1 /etc/passwd | sort | tr [:lower:] [:upper:] 	# tr all lower do upper
+
+echo hello | tr [a-z] [A-Z] 					# same like [:lower:] [:upper:]
+
+
+awk -F : '{ print $1 }' /etc/passwd				# same like # cut -d : -f 3 /etc/passwd # -F separator ':'  print $1 - print column 1
+
+sed -i -e '10d' grepfile1					# -i interactiv ( you can write immediately and save ) -e edit , '10d'  delete line number 10 from grepfile1
 
 
 
+sed -n '5p' /etc/passwd						# show 5th line
+
+ps aux | awk '{ print $1 }'					# 
+
+grep '^root' /etc/* 2>/dev/null
+
+grep '^...$' /etc/* 2>/dev/null
+
+grep alex * 2>/dev/null | grep -v alexander			# find alex, but not alexander
 
 
+##############################################################################################
 
 
+su -					# change to root user to exit print exit
 
+sudo -i					# same
 
+su marat
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+sudo visudo				# open with nano?
 
 
 
