@@ -766,21 +766,83 @@ Akk Expiration date:		# desactivating day
 
 
 
+grep anna /etc/passwd /etc/shadow	# 
+
+
+/etc/passwd:anna:x:1003:1003:my user:/home/anna:/bin/zsh
+
+anna -> user
+
+x -> pass is not here
+
+1003 -> user id
+
+1003 -> group id
+
+my user commentar
+
+/home/anna -> home directory
+
+/bin/zsh -> shell
 
 
 
+/etc/shadow:anna:!:18377:7:99999:7:::
+
+anna -> user
+
+! -> password
+
+18377:7:99999:7::: -> pass properties
+
+18377 -> number of day since 1 janvary 1970
+
+7 -> minimum fulinity of the password
+
+99999 -> days
+
+7 -> remining 7 day before expired
 
 
+sudo vipw		# to change this properties
+
+sudo vipw -s 		# passwords
 
 
+##########################################################################################
+
+				Groups
 
 
+cat /etc/group				# all group
 
 
+sales:x:1004:anna  -> secondary group
 
 
+sales -> name of group
+
+x -> group password not here
+
+1004 -> number of group
+
+anna -> mambers of the group
 
 
+linda:x:1001: -> primary group
+
+you don't need to indificate
+
+
+##########################################################################################
+
+
+			Configuring login on External Authentication Sources
+
+PAM
+sssd
+
+/etc/sssd/sssd.conf
 
 
 
