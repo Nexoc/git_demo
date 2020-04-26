@@ -520,7 +520,7 @@ Options:
   -h, --help                    	# display this help message and exit
   -k, --skel SKEL_DIR           	use this alternative skeleton directory
   -K, --key KEY=VALUE           	override /etc/login.defs defaults
-  -l, --no-log-init             	do not add the user to the lastlog and
+  -l, --no-log-init       m      	do notuesr add the user to the lastlog and
                                		 faillog databases
   -m, --create-home             	# create the user's home directory
   -M, --no-create-home         		# do not create the user's home directory
@@ -845,150 +845,81 @@ sssd
 /etc/sssd/sssd.conf
 
 
+sudo apt-get install "Directory Client"		# install ???
 
 
 
+cd /etc/security/
 
+vi limits.conf					# config groups users
 
 
 
 
+homework
 
+76
 
+create users:
 
+linda
+laura
+anna
+anouk
 
+useradd -m -d /home/linda linda
 
+adduser anouk
 
 
 
+set their password to exppire after 60 days
 
+sudo passwd laura
+sudo chage -E 2020-07-10 laura
+sudo chage -l laura
 
 
+create a group sales and make linda and laura members of that group
 
+sudo groupadd sales
+usermod -aG sales linda
+cat /etc/group
 
+create a group account and make anna and anouk members af that group
 
+sudo groupadd account
+usermod -aG account anna
+cat /etc/group
 
+Also create a group users, and make all four users members of that group as a secondary group
 
 
 
+use input redirection to set the password for these users to "password"
 
 
 
+Ensure all these users get a home directory in /home
+make sure that members of the group sales can no more 25 simultaneous processes from the shell
 
 
 
+sudo groupadd sales
+sudo groupadd account
+sudo groupadd users
 
 
+sudo vim /etc/login.defs
 
+/PASS #change for 60 days
 
+sudo useradd -g sales -G users linda
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+cd /etc/security
+sudo vi limits.conf 
+add line:
+@sales hard nproc 25
 
 
 

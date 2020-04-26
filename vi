@@ -1,0 +1,57 @@
+
+				VIM - VI
+
+command mode
+input mode
+
+how to start vi -> inputmode
+
+i		# inputmode
+o		# open new line
+O		# open a new line above the position
+[Ins] tap on keybord -> like i
+a		# append after position
+
+
+
+g 		# top of the document
+G		# bottom of the document
+pgd		# page down 
+pgu		# page up
+
+/yourtext	# find some text
+n		# next, find ->
+N		# find oposit direction
+:300		# go to number 300 of line
+v
+
+
+p
+
+how to start vi -> commandmode
+
+Esc
+:ZZ 		# save your text
+:wq!		# save your text "write quit"
+
+
+work with text:
+
+v		# visual (marking text)
+d		# delete
+y		# yank -> copy
+p		# past
+
+u		# undo (memory and you can go back <-)
+Ctrl-R		# redo ( go front wenn you go to far with undo)
+
+dd		# delete line
+x		# delete character
+gg 		# go to begining of the text
+G		# go on the end
+
+d$		# delete from your position all line on right site
+
+d^		# delete from your pos all line on the left site 
+
+:%s/drei/ZOPA/g	# change all words drei on ZOPA # with out g just first
