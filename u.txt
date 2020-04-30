@@ -926,16 +926,34 @@ add line:
 
 
 
+sudo userdel -r user1
+
+groupdel [options] GROUP
+
+sudo vipw
 
 
 
+useradd -m -d /home/linda linda
+
+sudo passwd laura
+sudo chage -E 2020-07-10 laura
+sudo chage -l laura
+
+sudo groupadd sales
+usermod -aG sales linda
+cat /etc/group
 
 
+#
 
+sudo groupadd sales
+sudo groupadd account
 
+sudo vi /etc/login.defs
+change pass max day on 60
 
-
-
+useradd
 
 
 
