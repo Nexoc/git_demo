@@ -1192,6 +1192,7 @@ sudo reboot
 
 sudo mount -o remount,usrquota,grpquota /
 
+mount 						# info /dev/sda1 on / type ext4 (rw,relatime,quota,usrquota,grpquota,errors=remount-ro)
 
 
 $ sudo quotacheck -cum /			# only user quota on the root (/) filesystem:
@@ -1202,16 +1203,25 @@ $ sudo quotacheck -cgm /			# use group quota only
 
 $ sudo quotacheck -cugm /			# to use both user and group quota
 
+sudo quotacheck -mavug				# quota create 2 files aquota.group and aquota.users
+
+quota -vu lisa					# info
+
+
 
 
 
 sudo quotaon -v /				# turn on quota on the root (/) filesystem
+qoutaon -a
+
+edquota -u lisa					# change parameters 
 
 sudo quotaoff -v /				# to turn off quota
 
 
 sudo edquota -u linda				# info  Don’t try to change it!!!
 https://linuxhint.com/wp-content/uploads/2019/02/12-11.png
+
 
 sudo blockdev --getbsz /dev/sda1		# the block size is 4096 bytes or 4KB *sda1 or sda2 
 
@@ -1252,40 +1262,58 @@ https://linuxhint.com/wp-content/uploads/2019/02/14-10.png
 
 
 ######################
-Working with Group Quota:
 
-To set a group quota for the group www-data, run the following command:
-$ sudo edquota -g www-data
+sudo edquota -g www-data			# set a group quota for the group www-data
 
-Now, you can set group quota the same way as user quota.
+$ sudo edquota -t				# change the grace period for the soft limit
 
-Changing Grace Period:
-
-To change the grace period for the soft limit, run the following command:
-$ sudo edquota -t
-
-Now, change the number of days for block and inode grace period depending on your need. 
-Once you’re done, save the file.
 
 Generating Quota Reports:
 
-To generate quota usage reports, run the following command:
-$ sudo repquota -aug
+$ sudo repquota -aug				# generate quota usage reports
 
-As you can see, the user and group quota report is generated.
+$ sudo repquota -au				# only to generate user quota reports
 
-If you only want to generate user quota reports, then run the following command:
-$ sudo repquota -au
-
-The same way, if you only want to generate group quota reports, then run the following command:
-$ sudo repquota -ag
-
-So, that’s how you use quota on Ubuntu. Thanks for reading this article. 
+$ sudo repquota -ag				# only to generate group quota reports
 
 
+
+############	find prommisions
+
+man find			# to find use "/perm" and n next
+
+-perm mode			# just 600 have to find 
+-perm -mode			#
+-perm /mode			#
+-perm +mode			#
+
+. -> where are you now or use /home
+
+find . -perm 0600 -exec ls -l {} \;
+find . -perm -0600 -exec ls -l {} \;
+find . -perm /0600 -exec ls -l {} \;
+find . -perm +0600 -exec ls -l {} \;
+
+find / -perm /4000 -exec ls -l {} \;
 
 
 ###################################################################################################
+
+Homework
+
+Create the directories /data/sales /data/account
+
+members of the group sales should be able to read and write files in /data/sales
+members of the group account should be able to read and write in data/account
+
+Members of sales should have read access to /data/account
+and members of account should have read access to ata/sales
+
+No other users should have access to these directories
+
+Users will only be allowed to delete files they have created themselves, but user ann is the sales manager all sales files
+
+
 
 
 
