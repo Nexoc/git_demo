@@ -855,10 +855,8 @@ vi limits.conf					# config groups users
 
 
 
-
+#
 homework
-
-76
 
 create users:
 
@@ -867,82 +865,39 @@ laura
 anna
 anouk
 
-useradd -m -d /home/linda linda
-
-adduser anouk
-
-
-
 set their password to exppire after 60 days
-
-sudo passwd laura
-sudo chage -E 2020-07-10 laura
-sudo chage -l laura
-
 
 create a group sales and make linda and laura members of that group
 
-sudo groupadd sales
-usermod -aG sales linda
-cat /etc/group
-
 create a group account and make anna and anouk members af that group
-
-sudo groupadd account
-usermod -aG account anna
-cat /etc/group
 
 Also create a group users, and make all four users members of that group as a secondary group
 
-
-
 use input redirection to set the password for these users to "password"
-
-
 
 Ensure all these users get a home directory in /home
 make sure that members of the group sales can no more 25 simultaneous processes from the shell
 
-
-
-sudo groupadd sales
-sudo groupadd account
-sudo groupadd users
-
-
-sudo vim /etc/login.defs
-
-/PASS #change for 60 days
-
-sudo useradd -g sales -G users linda
-
-cd /etc/security
-sudo vi limits.conf 
-add line:
-@sales hard nproc 25
-
-
-
-
-
+#
 
 sudo userdel -r user1
 
 groupdel [options] GROUP
 
-sudo vipw
+#
+sudo vipw				# users info
 
+sudo vipw -s				# user pass info
 
+id marat				# users info
 
-useradd -m -d /home/linda linda
+cat /etc/group				# groups info
 
-sudo passwd laura
-sudo chage -E 2020-07-10 laura
-sudo chage -l laura
+sudo vi /etc/login.defs			# change  param for new users
 
-sudo groupadd sales
-usermod -aG sales linda
-cat /etc/group
+grep linda /etc/passwd /etc/shadow	# user info
+
+sudo chage -l linda
 
 
 #
@@ -950,10 +905,50 @@ cat /etc/group
 sudo groupadd sales
 sudo groupadd account
 
-sudo vi /etc/login.defs
-change pass max day on 60
 
-useradd
+sudo vi /etc/login.defs
+change 'PASS_MAX' day on 60
+
+
+useradd -g sales -G users -m -d /home/linda linda	# primary group secondary group makedir - dir
+useradd -g sales -G users -m -d /home/laura laura
+useradd -g account -G users -m -d /home/anna anna
+useradd -g account -G users -m -d /home/anouk anouk
+
+
+sudo chage linda  		# change  ex date
+sudo chage -l linda
+
+
+passwd linda			# change passwd
+
+
+cd /etc/security
+sudo vi limits.conf 
+add line:
+@sales hard nproc 25		# for group sales just 25 processes
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
