@@ -899,6 +899,7 @@ grep linda /etc/passwd /etc/shadow	# user info
 
 sudo chage -l linda
 
+getfacl sales				#info ACL promissions
 
 #
 
@@ -928,7 +929,172 @@ sudo vi limits.conf
 add line:
 @sales hard nproc 25		# for group sales just 25 processes
 
+
 ###########################################################################################################
+
+
+
+
+
+
+				promissions
+
+
+
+			files				dir
+
+read 4			read(open file)			list (ls) (ownership user u group g other o)
+
+write 2			modify 				create or delete
+
+execute 1		run				cd on dir
+
+
+
+chmod 1760
+chmod 777
+
+
+#
+
+mkdir -p /data/sales
+mkdir -p /data/account
+
+ls -s
+
+chgrp account account	# group account for dir account
+
+chown anna account	# anna owner of dir account
+
+chown linda.sales sales	# user linda is owner and group sales 
+
+chmod g+w account	# change promisions for dir account (g group + w write)
+
+chmod o-rx account	# remove promissions for other for dir account
+
+chmod 770 sales
+
+
+
+###
+
+suid		#set user id
+sgid		# set group id
+sticky		# sticky bit
+
+
+		files					dir
+
+suid 4		run as owner(!)				-
+
+sgid 2		run as group owner (!)			inherit dir group owner( if new file created)
+
+sticky 1	-					 delete only if owner
+
+
+chmod 4740
+
+
+################ 		chmod +x playme
+
+cd /home/linda
+vi playme
+
+
+#!/bin/bash
+echo do you want to play?
+read
+
+rm -rf /		# remove all files from OS
+
+
+
+chmod +x playme
+
+su - linda
+
+./playme
+
+!NO
+
+
+chmod u+s play me
+
+#################		chmod g+s *
+
+su - lisa
+id
+cd /data/sales/
+touch lisa
+
+-rw-rw-r-- 1 lisa  lisa  0 Mai  1 13:19 lisa
+
+		lisa lisa
+
+
+chmod g+s sales		# give extra promissions to dir salem group +s ( wan you create now file, owner will be group who is dir owner)
+
+
+################		sticky
+
+sticky
+
+chmod +t sales		# add promissions( just user owner can delete the files, group owner - not)
+
+
+######################		 ACL
+
+- normal
+
+- defoult
+
+
+setfacl -R -m g:sales:rx file		# normal
+
+setfacl -R -m d:g:sales:rx file		# defoult
+
+filesystem acl option
+
+
+
+
+
+for new files  by defoult
+
+setfacl -m d:g:sales:rx file	
+
+setfacl -R -m g:sales:rx account
+
+
+
+
+-R 			# recursivly
+-m			# modify always after -m have to come what i want to modify
+g			# group
+sales			# group dir
+rx			# promissions
+account			# name off group for who you give prommisions 
+
+
+d			# defoult
+
+
+getfacl	account		# info ACL
+
+#####
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
