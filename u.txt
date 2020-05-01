@@ -1168,6 +1168,134 @@ lsattr file1 		# to see the attr
 				Quota
 
 
+https://linuxhint.com/disk_quota_ubuntu/
+
+to install
+sudo apt update
+sudo apt install quota
+
+sudo apt install linux-image-extra-virtual		 # if you need
+
+sudo vi /etc/fstab					# change param
+
+Now, add usrquota and/or grpquota options in the options field (4th) of the filesystem for which you want to enable quota in the /etc/fstab file. Once you’re done, save the file by pressing <Ctrl> + x followed by y and then press <Enter>.
+
+NOTE: To enable only user quota, use the usrquota option only. To enable only group quota, use the grpquota option only. To enable both user and group quota, use usrquota,grpquota option.
+
+https://linuxhint.com/wp-content/uploads/2019/02/6-23.png
+
+usrquota,grpquota
+
+
+sudo reboot
+
+
+sudo mount -o remount,usrquota,grpquota /
+
+
+
+$ sudo quotacheck -cum /			# only user quota on the root (/) filesystem:
+
+
+$ sudo quotacheck -cgm /			# use group quota only
+
+
+$ sudo quotacheck -cugm /			# to use both user and group quota
+
+
+
+
+sudo quotaon -v /				# turn on quota on the root (/) filesystem
+
+sudo quotaoff -v /				# to turn off quota
+
+
+sudo edquota -u linda				# info  Don’t try to change it!!!
+https://linuxhint.com/wp-content/uploads/2019/02/12-11.png
+
+sudo blockdev --getbsz /dev/sda1		# the block size is 4096 bytes or 4KB *sda1 or sda2 
+
+#
+You want to let the user linda use only 1 GB of disk space.
+1 GB = 1024 MB = 1024 * 1024 KB.
+How many blocks?
+Well, (1024 * 1024 / 4) = 262144 blocks for each gigabyte 
+There are 262144 blocks for each gigabyte.
+So, for 5 GB of disk space, the block size is 5 * 262144 = 1310720
+
+#
+Inode: It is the number of files you can create in a filesystem. 
+So, if the user bob is allowed to have 1000 inodes, then he can create only 1000 files or directories. Even if the total size of 1000 files or directories is less than the number of blocks he can use, he won’t still be able to create any new files or directories. 
+So, I would keep it a little high.
+
+A good measure is keeping it about 60-70% of the total block size.
+So, for a block size of 262144, a good enough inode number is 157280 or 183500.
+
+
+#
+Soft and Hard Limit: 
+Both block and inode can have a soft and a hard limit. 
+A user or group can exceed soft limit for a certain number of days called grace period. 
+But in no means they are allowed to exceed the hard limit. 
+You can put 0 for soft limit to disable soft limit if you want. 
+In this case, only hard limit will be used.
+
+NOTE: 
+You should only set the soft and hard limit. 
+Don’t modify the values of the blocks and inode columns. 
+They represent the blocks and inodes that the user is currently using.
+
+I set the quota for the user bob as follows. 
+Once you’re done, save the file. 
+The quota should be applied.
+https://linuxhint.com/wp-content/uploads/2019/02/14-10.png
+
+
+######################
+Working with Group Quota:
+
+To set a group quota for the group www-data, run the following command:
+$ sudo edquota -g www-data
+
+Now, you can set group quota the same way as user quota.
+
+Changing Grace Period:
+
+To change the grace period for the soft limit, run the following command:
+$ sudo edquota -t
+
+Now, change the number of days for block and inode grace period depending on your need. 
+Once you’re done, save the file.
+
+Generating Quota Reports:
+
+To generate quota usage reports, run the following command:
+$ sudo repquota -aug
+
+As you can see, the user and group quota report is generated.
+
+If you only want to generate user quota reports, then run the following command:
+$ sudo repquota -au
+
+The same way, if you only want to generate group quota reports, then run the following command:
+$ sudo repquota -ag
+
+So, that’s how you use quota on Ubuntu. Thanks for reading this article. 
+
+
+
+
+###################################################################################################
+
+
+
+
+
+
+
+
+
+
 
 
 
