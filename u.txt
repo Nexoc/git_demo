@@ -855,8 +855,11 @@ vi limits.conf					# config groups users
 
 
 
-#
+####################################################################################################################
+
+
 homework
+
 
 create users:
 
@@ -879,6 +882,7 @@ Ensure all these users get a home directory in /home
 make sure that members of the group sales can no more 25 simultaneous processes from the shell
 
 #
+
 
 sudo userdel -r user1
 
@@ -913,9 +917,9 @@ getfacl sales				#info ACL promissions
 
 lsattr file1 				# to see the attr
 
+tail -n 5 /etc/group			# info dir promissions
 
-
-
+tail -n 5 &etc/passwd			# info group promissions
 
 
 
@@ -987,7 +991,7 @@ chgrp account account	# group account for dir account
 
 chown anna account	# anna owner of dir account
 
-chown linda.sales sales	# user linda is owner and group sales 
+chown linda.sales sales	# user linda and group sales is owner of dir sales 
 
 chmod g+w account	# change promisions for dir account (g group + w write)
 
@@ -999,7 +1003,7 @@ chmod 770 sales
 
 ###
 
-suid		#set user id
+suid		# set user id
 sgid		# set group id
 sticky		# sticky bit
 
@@ -1016,7 +1020,7 @@ sticky 1	-					 delete only if owner
 chmod 4740
 
 
-################ 		chmod +x playme
+##################### 		chmod u+s playme
 
 cd /home/linda
 vi playme
@@ -1039,9 +1043,9 @@ su - linda
 !NO
 
 
-chmod u+s play me
+chmod u+s playme
 
-#################		chmod g+s *
+####################		chmod g+s 
 
 su - lisa
 id
@@ -1053,16 +1057,18 @@ touch lisa
 		lisa lisa
 
 
-chmod g+s sales		# give extra promissions to dir salem group +s ( wan you create now file, owner will be group who is dir owner)
+chmod g+s sales		# give extra promissions to dir salem group +s ( wan you create new file, owner, will be a group, who is dir owner)
 
 
-################		sticky
+####################		sticky
 
 sticky
 
 chmod +t sales		# add promissions( just user owner can delete the files, group owner - not)
 
 #############################################################################################
+
+
 ######################		 ACL
 
 - normal
@@ -1087,7 +1093,7 @@ setfacl -m d:g:sales:rx file
 setfacl -R -m g:sales:rx account
 
 
-
+man setfacl
 
 -R 			# recursivly
 -m			# modify always after -m have to come what i want to modify
@@ -1103,7 +1109,21 @@ d			# defoult
 getfacl	account		# info ACL
 
 
+setfacl -m u:lisa:r file			# Granting an additional user read access
+
+setfacl -m m::rx file				# Revoking write access from all groups and all named users (using the effective rights mask)
+
+setfacl -x g:staff file				# Removing a named group entry from a file's ACL
+
+getfacl file1 | setfacl --set-file=- file2	# Copying the ACL of one file to another
+
+getfacl --access dir | setfacl -d -M- dir	# Copying the access ACL into the Default ACL
+
+
+
 ###########################################################################################
+
+
 #####				chattr	lsattr
 
 chattr
@@ -1122,21 +1142,21 @@ The format of a symbolic mode is +-=[aAcCdDeijPsStTu]
 
 The  letters 'aAcCdDeijPsStTu' select the new attributes for the files:
 
-append only (a),
-no atime updates (A),
-compressed (c),
-no copy on write (C),
-no  dump  (d), 
-synchronous directory updates (D),
-extent format (e), 
-immutable (i), 
-data journalling (j), 
-project  hierarchy  (P), 
-secure  deletion  (s),
-synchronous updates  (S),  
-no  tail-merging  (t),
-top  of  directory  hierarchy  (T),
-undeletable (u).
+a		# append only
+A		# no atime updates
+c		# compressed
+C		# no copy on write
+d		# no  dump
+D		# synchronous directory updates
+e		# extent format 
+i		# immutable
+j		# data journalling
+P		# project  hierarchy
+s		# secure  deletion
+S		# synchronous updates
+t		# no  tail-merging
+T		# top  of  directory  hierarchy
+u		# undeletable
 
 
 The following attributes are read-only, and may be listed by lsattr(1) but not
@@ -1305,6 +1325,7 @@ Homework
 #
 Create the directories /data/sales /data/account
 
+
 members of the group sales should be able to read and write files in /data/sales
 members of the group account should be able to read and write in data/account
 
@@ -1314,6 +1335,85 @@ and members of account should have read access to ata/sales
 No other users should have access to these directories
 
 Users will only be allowed to delete files they have created themselves, but user ann is the sales manager all sales files
+
+
+1 +
+
+2
+ 	chgrp sales sales
+	chgrp account account
+
+	chmod g+rw sales
+	chmod g+rw account
+
+3
+	setfacl -R -m g:sales:rx account
+	setfacl -R -m g:account:rx sales
+	
+	setfacl -R -m d:g:sales:rx account
+	setfacl -R -m d:g:account:rx sales
+
+4
+	chmod 770 sales
+	chmod 770 account
+
+		or
+
+	chmod o-rwx sales
+	chmod o-rwx account
+5
+	chmod +t sales
+	chmod +t account
+
+
+############################################################################################################################
+
+
+chmod ...
+chgrp...
+
+setfacl -R -m g:sales:rx file		# normal
+
+setfacl -R -m d:g:sales:rx file		# defoult
+
+getfacl	account		# info ACL
+
+
+
+
+chgrp account account	# group account for dir account
+
+chown anna account	# anna owner of dir account
+
+
+chmod u+s play me	# 
+
+
+
+chown linda.sales sales	# user linda and sales is owner and of dir sales 
+
+chmod g+w account	# change promisions for dir account (g group + w write)
+
+chmod o-rx account	# remove promissions for other for dir account
+
+chmod 770 sales
+
+
+
+
+chmod g+s sales		# give extra promissions to dir salem group +s ( wan you create new file, owner will be group who is dir owner)
+
+chmod +t sales		# add promissions( just user owner can delete the files, group owner - not)
+
+
+################################################################################################################################################
+
+
+
+
+
+
+
 
 
 
