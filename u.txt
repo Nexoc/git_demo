@@ -1301,6 +1301,8 @@ find / -perm /4000 -exec ls -l {} \;
 
 Homework
 
+
+#
 Create the directories /data/sales /data/account
 
 members of the group sales should be able to read and write files in /data/sales
