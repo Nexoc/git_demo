@@ -1409,13 +1409,104 @@ chmod +t sales		# add promissions( just user owner can delete the files, group o
 ################################################################################################################################################
 
 
+				NETWORKING
+	
+
+	conf networking
+	conf the SSH Servis
+	conf a Firewall
+	conf Tine Services
 
 
 
+IPv4
+IPc6
+
+Applying Run-time Network Configuration
+
+Understanding Network Device Naming
+
+Apply Persastent Network Confoguration in Cent OS and i hope Ubuntu
+
+############################################################################################################
+
+
+IP		
+
+
+-------------------------------------------------------------------
+		Internet  DNS → Domain Name Services
+		↓
+	← router → 10.0.0.1 /16
+		↓
+	subnet mask 10.0.0.0 /16
+		↓
+10.0.0.2 /16 ← router →10.10.0.1/24	default gateway
+		↓
+	subnet mask 10.10.0.0/24
+		↓
+ 	user 10.10.0.10/24
 
 
 
+------------------------------------------------------------------
+	IP
+	subnet mask
+	default router
+	DNS
+	↓
+	DHCP (Dinamic Host Configuration Protocol) dhclient(linux)
 
+----------------------------------------------------------------------
+
+IPv4
+
+IPv6 128 bits
+
+
+#####################################################################
+
+IPv6 128 bits and written in hexadecomal
+
+fe80:1223:3345:5567:abcd:efef:1000:0001
+
+Leading zeros can be omitted, as well as long strings of zeros
+fe80::1			# left out six 0
+
+
+When referring to address + port, put the address between square brackets:
+[fe80::1]:80
+
+Default subnet mask is /64
+
+Node bit of the address may cantain the device MAC adress
+
+
+::1/128				# localhost
+
+::				# unspecified address (0.0.0.0) 
+
+::/0				# default route
+
+2000::/3			# global unicast address
+
+fd00::/8			# inuque local addresses (privat addresses)
+
+fe80::/64 			# link-local address
+
+ff00::/8			# multicast
+
+
+
+fe80::				# address is used by default
+
+through static addressing
+
+
+DHCPv6		# multicast is sent out to ff02::1:2 port 547/UDP. This is the all DHCP multicast group. The DHCP server sends a packet back to client 546/UDP
+
+
+SLAAC (Stateless Address Auto Configuration) # Router solicitation is sent to ff02::02; the all router multicast group. The router sents back an IP address, which aloows the host to learn the netwirk prefix. Install the radvd package to use this
 
 
 
