@@ -1464,7 +1464,7 @@ IPv4
 IPv6 128 bits
 
 
-#####################################################################
+###########
 
 IPv6 128 bits and written in hexadecomal
 
@@ -1508,7 +1508,7 @@ DHCPv6		# multicast is sent out to ff02::1:2 port 547/UDP. This is the all DHCP 
 
 SLAAC (Stateless Address Auto Configuration) # Router solicitation is sent to ff02::02; the all router multicast group. The router sents back an IP address, which aloows the host to learn the netwirk prefix. Install the radvd package to use this
 
-######################################################
+########
 
 ip help			# show options
 
@@ -1530,7 +1530,7 @@ ip rout show		#
 
 ping 8.8.8.8		# 
 
-##############################################################################################
+######
 
 
 Boisdevname used device names that reveal information about physical location
@@ -1543,7 +1543,7 @@ eno123 (EtherNet Onboard)
 
 If driver doesn't reveal sufficient information, eth0 etc. is used
 
-##################################################################################################
+#######
 
 
 				network configuration 
@@ -1553,11 +1553,82 @@ server admin guide			# read google
 
 cd /etc/network
 
-vi interfaces
+vi interfaces				# file 
+
+make a copy:
+cp interfaces interfaces.svv
+
+auto ens33
+iface ens33 inet static
+address 192.168.4.250
+netmask 255.255.255.0
+gateway 192.168.4.2
 
 
+#####
+
+					host name
+
+vi /etc/hostname				# my host name
+
+uname -a					# show 
+
+cd /proc/sys/kernel
+
+cat hostname					# show the hostname
+
+hostnamectl --help				#
+
+  status                 Show current hostname settings
+  set-hostname NAME      Set system hostname
+  set-icon-name NAME     Set icon name for host
+  set-chassis NAME       Set chassis type for host
+  set-deployment NAME    Set deployment environment for host
+  set-location NAME      Set location for host
 
 
+vi /etc/hosts					# 
+
+######
+
+
+				DNS
+
+vi /etc/resolv.conf				#  after reboot will be overwrite
+
+vi /etc/nsswitch.conf				#	
+
+##
+
+			Configuration Networking
+
+ping 8.8.8.8
+64 bytes from 8.8.8.8: icmp_seq=1 ttl=53 time=127 ms
+
+time=127 ms ->	speed of network conection
+
+ping nu.nl			# 
+
+
+dig nu-nl			# show all about site
+
+sudo apt install nmap		# install nmap
+
+nmap 127.0.0.53			# show the ports which one is open 
+
+###############################################################################################
+
+					Homework
+
+Configure your hosts with persistent address configuration, matching the subnet that is used in your network. Choose any IP address you like, as long as it allows you to connect to outside computers.
+
+Also configure an IPv6 address for internal use
+
+
+#########################################################################################################
+
+
+							SSH
 
 
 
