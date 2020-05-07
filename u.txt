@@ -1508,9 +1508,52 @@ DHCPv6		# multicast is sent out to ff02::1:2 port 547/UDP. This is the all DHCP 
 
 SLAAC (Stateless Address Auto Configuration) # Router solicitation is sent to ff02::02; the all router multicast group. The router sents back an IP address, which aloows the host to learn the netwirk prefix. Install the radvd package to use this
 
+######################################################
+
+ip help			# show options
+
+ip link show		# show network interfaces
+
+ip address show		# lo -> loop back interface (internal, always inet 127.0.0.1/8 or inet6 ::1/128),
+			# enp0s3 -> MAC address link/ether 08:00:27:8d:87:a5 brd ff:ff:ff:ff:ff:ff
+			# IPv4 address  inet 10.0.2.15/24 brd 10.0.2.255
+			# IPv6 adderss  inet6 fe80::e446:cb7d:c68f:753b/64
 
 
+ip address help		# help
 
+ip address add dev ens33 10.0.010/24		# dev - device, ens33 device name, ip
+
+ifconfig		# very old command on ip setup
+
+ip rout show		# 
+
+ping 8.8.8.8		# 
+
+##############################################################################################
+
+
+Boisdevname used device names that reveal information about physical location
+
+em123 (em -> Ethernet Motherboard 123 ->Portnumber)
+
+p<port>p<slot> (PCI, PCI port)
+
+eno123 (EtherNet Onboard)
+
+If driver doesn't reveal sufficient information, eth0 etc. is used
+
+##################################################################################################
+
+
+				network configuration 
+
+
+server admin guide			# read google
+
+cd /etc/network
+
+vi interfaces
 
 
 
