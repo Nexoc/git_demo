@@ -1,0 +1,717 @@
+# class Toyota:
+#     def __init__(self):
+#         self.color = 'RED'
+#         self.price = '20000'
+#         self.max_velocity = '200 km/st'
+#         self.current_velocity = '0 km/st'
+#         self.engine_rpm = 0
+#
+#     def start(self):
+#         print('motor on')
+#         self.engine_rpm = 900
+#
+#     def go(self):
+#         print('gema!')
+#         self.engine_rpm = 2000
+#         self.current_velocity = '20 km/st'
+#
+#
+# my_car = Toyota()
+# print('color', my_car.color)
+# print('price', my_car.price)
+# print('max_velocity', my_car.max_velocity)
+# print('rpm', my_car.engine_rpm)
+# print('current_velocity', my_car.current_velocity)
+#
+# my_car.start()
+# print('rpm', my_car.engine_rpm)
+# my_car.go()
+# print('rpm', my_car.engine_rpm)
+# print('current_velocity', my_car.current_velocity)
+#
+#
+# produced, plan = 0, 1000
+# warehause = []
+# while produced < plan:
+#     new_car = Toyota()
+#     warehause.append(new_car)
+#     produced += 1
+
+
+class Robot:
+
+    def __init__(self):
+        self.name = 'R2D2'
+
+    def hello(self):
+        print('Hallo Welt! ich bin', self.name)
+
+    def go(self, x, y):
+        print('ich gehe in der', x, y)
+
+
+robot = Robot()
+
+
+#
+# robot.temperature = 1
+#
+# while robot.temperature < 10:
+#     robot.temperature *= 2
+# print(robot.temperature)
+# # del robot.temperature
+
+
+# robot_2 = Robot()
+# robot_2.name = 'Wally'
+#
+# print(robot.name, robot_2.name)
+# print(robot_2, robot)
+# print(robot == robot_2, robot is robot_2)
+#
+#
+# attr_name = 'model'
+# if hasattr(robot, attr_name):
+#     # hasattr(object, name) - проверка на существование
+#     print(robot.model)
+# else:
+#     setattr(robot, attr_name, 'android')
+#     # setettr(objekt, name, value) - установка
+# print(robot.model)
+# # print(getattr(robot, attr_name)
+#
+#
+# delattr(robot, attr_name)  # удаление атрибута delattr(objekt, name) - удаление
+
+
+# for attr_name in ('weight', 'height'):
+#     setattr(robot, attr_name, 42)
+# print(hasattr(robot, 'weight'))
+# print(getattr(robot, 'weight'))
+
+
+robot.go(x=100, y =200)
+
+
+# Отличительная особенность методов объектов от простых функций состоит в том,
+# что методу всегда передаётся ссылка на объект-экземпляр.
+# Эта первый параметр метода и обычно он называется self.
+# Название - не более чем соглашение: имя self не имеет абсолютно никакого
+# специального смысла для языка Python. Но так принято :)
+
+
+class Backpack:
+    """ Рюкзак """
+
+    def add(self, item):
+        """ Положить в рюкзак """
+        print("В рюкзак положили ", item)
+        self.content = item
+
+
+my_backpack = Backpack()
+my_backpack.add(item='ноутбук')
+
+my_son_backpack = Backpack()
+my_son_backpack.add(item='учебник')
+
+# то есть аналогия такая, что были вызовы типа таких
+# add(self=my_backpack, item='ноутбук')
+# add(self=my_son_backpack, item='учебник')
+
+# на самом деле так и есть, просто есть понятие "связанный метод"
+# это метод, который привязан к объекту, жестко фиксирован self
+print(Backpack.add)
+print(my_backpack.add)
+
+
+# то есть следующие два вызова аналогичны
+my_backpack.add(item='ноутбук')
+Backpack.add(self=my_backpack, item='ноутбук')
+
+###############################################################################
+
+
+
+class Backpack:
+    """ Рюкзак """
+
+    def __init__(self, gift=None):
+        self.content = []
+        if gift:
+            self.content.append(gift)
+
+    def add(self, item):
+        """ Положить в рюкзак """
+        self.content.append(item)
+        print("В рюкзак положили:", item)
+
+    def __str__(self):
+        return 'Backpack: ' + ', '.join(self.content)
+
+    def __bool__(self):
+        return self.content != []
+
+    def __len__(self):
+        return len(self.content)
+
+
+my_backpack = Backpack()
+# my_backpack.add(item='ноутбук')
+print(bool(my_backpack), len(my_backpack))
+if my_backpack:
+    print('Рюкзак не пуст!')
+    print('В нем лежит', len(my_backpack), 'предметов')
+else:
+    print('Вот рюкзак пустой, он предмет простой...')
+
+
+# все специальные методы перечислены в
+#   https://docs.python.org/3/reference/datamodel.html#special-method-names
+
+
+#########################################################################################
+
+
+
+
+# -*- coding: utf-8 -*-
+
+# Эмуляция операций и операторов python с помощью специальных методов
+
+# Эмуляция операторов сравнения
+#
+# object.__eq__(self, other) - равенство двух объектов ==
+# object.__ne__(self, other) - не равно !=
+# object.__lt__(self, other) - строго меньше <
+# object.__le__(self, other) - меньше или равно <=
+# object.__gt__(self, other) - строго больше >
+# object.__ge__(self, other) - больше или равно >=
+#
+# должны возвращать boolean - True/False
+
+class Backpack:
+    """ Рюкзак """
+
+    def __init__(self, gift=None):
+        self.content = []
+        if gift:
+            self.content.append(gift)
+
+    def __eq__(self, other):
+        return self.content == other.content
+
+
+my_backpack = Backpack(gift='бутерброд')
+son_backpack = Backpack(gift='бутерброд')
+
+if my_backpack == son_backpack:
+    print('Как мы похожи...')
+
+if Backpack.__eq__(self=my_backpack, other=son_backpack):
+    print('Как мы похожи...')
+
+
+# Эмуляция математических операций
+# 2 + 2
+# my_car + truck
+#
+# object.__add__(self, other) - сложение +
+# object.__sub__(self, other) - вычитание -
+# object.__mul__(self, other) - умножение *
+# object.__truediv__(self, other) - деление /
+# object.__floordiv__(self, other) - целочисленное деление //
+# object.__mod__(self, other) - остаток от деления %
+# object.__pow__(self, other) - возведение в степень **
+# object.__lshift__(self, other) - побитовый сдвиг влево <<
+# object.__rshift__(self, other) - побитовый сдвиг вправо >>
+# object.__and__(self, other) - побитовое И &
+# object.__xor__(self, other) - побитовое исключающее ИЛИ ^
+# object.__or__(self, other) - побитовое ИЛИ |
+#
+# должны возвращать объект
+
+class Backpack:
+    """ Рюкзак """
+
+    def __init__(self, gift=None):
+        self.content = []
+        if gift:
+            self.content.append(gift)
+
+    def __str__(self):
+        return 'Backpack: ' + ', '.join(self.content)
+
+    def __add__(self, other):
+        new_obj = Backpack()
+        new_obj.content.extend(self.content)
+        new_obj.content.extend(other.content)
+        return new_obj
+
+
+my_backpack = Backpack(gift='бутерброд')
+son_backpack = Backpack(gift='банан')
+new_backpack = my_backpack + son_backpack
+print(new_backpack)
+
+# other_backpack = my_backpack + ['яблоко', 'апельсин', ]
+# print(other_backpack)
+
+
+# для операций расширенного присвоения служат методы
+# object.__iadd__(self, other) - +=
+# object.__isub__(self, other) - -=
+# object.__imul__(self, other) - *=
+# object.__itruediv__(self, other) - /+
+# object.__ifloordiv__(self, other) - //=
+# object.__imod__(self, other) - %=
+# object.__ipow__(self, other) - **=
+# object.__ilshift__(self, other) - <<=
+# object.__irshift__(self, other) - >>=
+# object.__iand__(self, other) - &=
+# object.__ixor__(self, other) - ^=
+# object.__ior__(self, other) - |=
+#
+# они изменяют сам объект (по месту, inplace)
+
+class Backpack:
+    """ Рюкзак """
+
+    def __init__(self, gift=None):
+        self.content = []
+        if gift:
+            self.content.append(gift)
+
+    def __str__(self):
+        return 'Backpack: ' + ', '.join(self.content)
+
+    def __iadd__(self, other):
+        self.content.extend(other.content)
+        return self
+
+
+my_backpack = Backpack(gift='бутерброд')
+son_backpack = Backpack(gift='банан')
+my_backpack += son_backpack
+print(my_backpack)
+
+
+# Не обязательно возвращать объект такого же класса(типа)
+class Bread:
+
+    def __str__(self):
+        return 'Я хлеб'
+
+    def __add__(self, other):
+        return Sandwich(part1=self, part2=other)
+
+
+class Sausage:
+
+    def __str__(self):
+        return 'Я колбаса'
+
+    def __add__(self, other):
+        return Sandwich(part1=self, part2=other)
+
+
+class Sandwich:
+
+    def __init__(self, part1, part2):
+        self.part1 = part1
+        self.part2 = part2
+
+    def __str__(self):
+        return 'Я бутерброд. Состою из ' + str(self.part1) + ' и ' + str(self.part2)
+
+
+borodinsky = Bread()
+salami = Sausage()
+result = borodinsky + salami
+print(result)
+
+
+# эмуляция вызова функции - это когда объект ведет себя как функция
+# object.__call__(self[, args...]) - вызов как функции
+
+def func(*args, **kwargs):
+    print(args, kwargs)
+
+
+print(func)
+func(a=2, b=2)
+
+
+class MyFunction:
+
+    def __call__(self, *args, **kwargs):
+        print(args, kwargs)
+
+
+func = MyFunction()
+print(func)
+
+func(a=2, b=2)
+
+
+# это используется для немного странных и увлекательных вещей :)
+# погрузимся чуть-чуть в функциональный стиль
+class Multyplier:
+
+    def __init__(self, factor=2):
+        self.factor = factor
+
+    def __call__(self, *args):
+        res = []
+        for item in args:
+            res.append(item * self.factor)
+        return res
+
+
+mul_by_27 = Multyplier(factor=27)
+result = mul_by_27(1, 2, 3, 4)
+print(result)
+
+# multipiers = []
+# for factor in (2, 3, 4, 5):
+#     mul = Multyplier(factor=factor)
+#     multipiers.append(mul)
+# print(multipiers)
+#
+# for mul in multipiers:
+#     print(mul(10, 20, 30))
+
+
+# все специальные методы перечислены в
+#   https://docs.python.org/3/reference/datamodel.html#special-method-names
+
+
+
+
+#######################################################################################
+
+
+
+
+# -*- coding: utf-8 -*-
+
+# Эмуляция операций и операторов python с помощью специальных методов
+
+# Эмуляция операторов сравнения
+#
+# object.__eq__(self, other) - равенство двух объектов ==
+# object.__ne__(self, other) - не равно !=
+# object.__lt__(self, other) - строго меньше <
+# object.__le__(self, other) - меньше или равно <=
+# object.__gt__(self, other) - строго больше >
+# object.__ge__(self, other) - больше или равно >=
+#
+# должны возвращать boolean - True/False
+
+class Backpack:
+    """ Рюкзак """
+
+    def __init__(self, gift=None):
+        self.content = []
+        if gift:
+            self.content.append(gift)
+
+    def __eq__(self, other):
+        return self.content == other.content
+
+
+my_backpack = Backpack(gift='бутерброд')
+son_backpack = Backpack(gift='бутерброд')
+
+if my_backpack == son_backpack:
+    print('Как мы похожи...')
+
+if Backpack.__eq__(self=my_backpack, other=son_backpack):
+    print('Как мы похожи...')
+
+
+# Эмуляция математических операций
+# 2 + 2
+# my_car + truck
+#
+# object.__add__(self, other) - сложение +
+# object.__sub__(self, other) - вычитание -
+# object.__mul__(self, other) - умножение *
+# object.__truediv__(self, other) - деление /
+# object.__floordiv__(self, other) - целочисленное деление //
+# object.__mod__(self, other) - остаток от деления %
+# object.__pow__(self, other) - возведение в степень **
+# object.__lshift__(self, other) - побитовый сдвиг влево <<
+# object.__rshift__(self, other) - побитовый сдвиг вправо >>
+# object.__and__(self, other) - побитовое И &
+# object.__xor__(self, other) - побитовое исключающее ИЛИ ^
+# object.__or__(self, other) - побитовое ИЛИ |
+#
+# должны возвращать объект
+
+class Backpack:
+    """ Рюкзак """
+
+    def __init__(self, gift=None):
+        self.content = []
+        if gift:
+            self.content.append(gift)
+
+    def __str__(self):
+        return 'Backpack: ' + ', '.join(self.content)
+
+    def __add__(self, other):
+        new_obj = Backpack()
+        new_obj.content.extend(self.content)
+        new_obj.content.extend(other.content)
+        return new_obj
+
+
+my_backpack = Backpack(gift='бутерброд')
+son_backpack = Backpack(gift='банан')
+new_backpack = my_backpack + son_backpack
+print(new_backpack)
+
+# other_backpack = my_backpack + ['яблоко', 'апельсин', ]
+# print(other_backpack)
+
+
+# для операций расширенного присвоения служат методы
+# object.__iadd__(self, other) - +=
+# object.__isub__(self, other) - -=
+# object.__imul__(self, other) - *=
+# object.__itruediv__(self, other) - /+
+# object.__ifloordiv__(self, other) - //=
+# object.__imod__(self, other) - %=
+# object.__ipow__(self, other) - **=
+# object.__ilshift__(self, other) - <<=
+# object.__irshift__(self, other) - >>=
+# object.__iand__(self, other) - &=
+# object.__ixor__(self, other) - ^=
+# object.__ior__(self, other) - |=
+#
+# они изменяют сам объект (по месту, inplace)
+
+class Backpack:
+    """ Рюкзак """
+
+    def __init__(self, gift=None):
+        self.content = []
+        if gift:
+            self.content.append(gift)
+
+    def __str__(self):
+        return 'Backpack: ' + ', '.join(self.content)
+
+    def __iadd__(self, other):
+        self.content.extend(other.content)
+        return self
+
+
+my_backpack = Backpack(gift='бутерброд')
+son_backpack = Backpack(gift='банан')
+my_backpack += son_backpack
+print(my_backpack)
+
+
+# Не обязательно возвращать объект такого же класса(типа)
+class Bread:
+
+    def __str__(self):
+        return 'Я хлеб'
+
+    def __add__(self, other):
+        return Sandwich(part1=self, part2=other)
+
+
+class Sausage:
+
+    def __str__(self):
+        return 'Я колбаса'
+
+    def __add__(self, other):
+        return Sandwich(part1=self, part2=other)
+
+
+class Sandwich:
+
+    def __init__(self, part1, part2):
+        self.part1 = part1
+        self.part2 = part2
+
+    def __str__(self):
+        return 'Я бутерброд. Состою из ' + str(self.part1) + ' и ' + str(self.part2)
+
+
+borodinsky = Bread()
+salami = Sausage()
+result = borodinsky + salami
+print(result)
+
+
+# эмуляция вызова функции - это когда объект ведет себя как функция
+# object.__call__(self[, args...]) - вызов как функции
+
+def func(*args, **kwargs):
+    print(args, kwargs)
+
+
+print(func)
+func(a=2, b=2)
+
+
+class MyFunction:
+
+    def __call__(self, *args, **kwargs):
+        print(args, kwargs)
+
+
+func = MyFunction()
+print(func)
+
+func(a=2, b=2)
+
+
+# это используется для немного странных и увлекательных вещей :)
+# погрузимся чуть-чуть в функциональный стиль
+class Multyplier:
+
+    def __init__(self, factor=2):
+        self.factor = factor
+
+    def __call__(self, *args):
+        res = []
+        for item in args:
+            res.append(item * self.factor)
+        return res
+
+
+mul_by_27 = Multyplier(factor=27)
+result = mul_by_27(1, 2, 3, 4)
+print(result)
+
+# multipiers = []
+# for factor in (2, 3, 4, 5):
+#     mul = Multyplier(factor=factor)
+#     multipiers.append(mul)
+# print(multipiers)
+#
+# for mul in multipiers:
+#     print(mul(10, 20, 30))
+
+
+# все специальные методы перечислены в
+#   https://docs.python.org/3/reference/datamodel.html#special-method-names
+
+
+
+#######################################################################################################
+
+
+
+
+# -*- coding: utf-8 -*-
+
+from random import randint
+
+# Реализуем модель человека.
+# Человек может есть, работать, играть, ходить в магазин.
+# У человека есть степень сытости, немного еды и денег.
+# Если сытость < 0 единиц, человек умирает.
+# Человеку надо прожить 365 дней.
+from termcolor import cprint
+
+
+class Man:
+
+    def __init__(self, name):
+        self.name = name
+        self.fullness = 50
+        self.house = None
+
+    def __str__(self):
+        return 'Я - {}, сытость {}'.format(
+            self.name, self.fullness)
+
+    def eat(self):
+        if self.house.food >= 10:
+            cprint('{} поел'.format(self.name), color='yellow')
+            self.fullness += 10
+            self.house.food -= 10
+        else:
+            cprint('{} нет еды'.format(self.name), color='red')
+
+    def work(self):
+        cprint('{} сходил на работу'.format(self.name), color='blue')
+        self.house.money += 50
+        self.fullness -= 10
+
+    def watch_MTV(self):
+        cprint('{} смотрел весь день MTV'.format(self.name), color='green')
+        self.fullness -= 10
+
+    def shopping(self):
+        if self.house.money >= 50:
+            cprint('{} сходил в магазин'.format(self.name), color="magenta")
+            self.house.food += 50
+            self.house.money -= 50
+        else:
+            cprint('{} деньги кончились'.format(self.name), color='red')
+
+    def go_into_the_house(self, house):
+        self.house = house
+        self.fullness -= 10
+        cprint('{} приехал домой'.format(self.name), color='cyan')
+
+    def act(self):
+        if self.fullness <= 0:
+            cprint('{} умер...'.format(self.name), color='red')
+            return
+        dice = randint(1, 6)
+        if self.fullness < 20:
+            self.eat()
+        elif self.house.food < 30:
+            self.shopping()
+        elif self.house.money < 60:
+            self.work()
+        elif dice == 1:
+            self.work()
+        elif dice == 2:
+            self.eat()
+        else:
+            self.watch_MTV()
+
+
+class House:
+
+    def __init__(self):
+        self.food = 10
+        self.money = 50
+
+    def __str__(self):
+        return 'В доме осталось еды {}, и денег {}'.format(
+            self.food, self.money)
+
+
+citizens = [
+    Man(name='Бивис'),
+    Man(name='Батхед'),
+    Man(name='Кенни')
+]
+
+my_sweet_home = House()
+for citizen in citizens:
+    citizen.go_into_the_house(house=my_sweet_home)
+
+
+for day in range(1, 366):
+    print('============ день {} ============='.format(day))
+    for citizen in citizens:
+        citizen.act()
+    print('-_-_-_-_-_- в конце дня -_-_-_-_-_-')
+    for citizen in citizens:
+        print(citizen)
+    print(my_sweet_home)
+
+
+

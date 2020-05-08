@@ -1,0 +1,77 @@
+import random as r
+
+n = r.randint(1, 100)
+user_num = 0
+cnt = 0
+name = input('Geben Sie Ihren Namen ein ')
+
+while True:
+    try:
+        user_num = int(input('Ich habe ein Zahl von 1 bis 100 gemacht, rate mal: '))
+        cnt += 1
+        if user_num == n:
+            print(f'Ja!!! Sie haben die Zahl in {cnt} Versuchen erraten! Vielen Dank für Spiel, '+name)
+            if input('Möchten Sie noch ein mal spielen? j|n ') == 'j':
+                n = r.randint(1, 100)
+                cnt = 0
+
+            else:
+                break
+        elif user_num > n:
+                print('Meine Nummer ist weniger')
+        else:
+                print('Meiner Nummer ist großer')
+    except ValueError:
+        print('Muss ein Zahl sein')
+
+
+
+print(f'Danke.Auf wieder sehen')
+
+
+
+
+
+
+
+def prime(n):
+    if n % 2 == 0:
+        return n == 2
+    d = 3
+    while d * d <= n and n % d != 0:
+        d += 2
+    return d * d > n
+
+
+def prime_lst(a=1, b=10000):
+    j = 1
+    lis = []  # создаем пустой список для хранения простых чисел
+
+    while len(lst) <= b:  # мотаем круги пока не найдём  1001-ое  простое число
+        j += 1  # число считает круги
+        for e in lis:  # пробегаем все числа от 2 до числа до которого досчитали
+            if j % e == 0:  # проверка на остаток, если нет, то это не простое
+                break  # прерывает
+        else:
+            lis.append(cnt)  # если делителей нет, добавляем число в список
+            return lis
+
+
+
+
+X = 600851475143
+
+cnt = 1
+lst = []
+for i in prime_lst(1, 10000):
+    for 
+    while X <= 600851475143 / i:
+        cnt += 1  # число считает круги
+        if 600851475143 % cnt == 0:
+            if prime(cnt):
+                lst.append(cnt)
+                if 600851475143 % cnt == 0:
+                    print(cnt)
+
+
+print(lst[-1])  # ждать очень долго, я дождался

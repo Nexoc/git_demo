@@ -1,0 +1,180 @@
+
+0 chrome
+
+		скачать и установить нормально	
+		
+1 Git
+
+	You should be running a server with any Ubuntu 16.04 LTS release.
+	You will need to log in to SSH via the root user.
+
+		apt-get install git-core
+		git --version
+		git version 2.7.4
+
+		git config --global user.name "testuser"
+		git config --global user.email "testuser@example.com"
+
+		cat ~/.gitconfig
+		git config --list
+
+	Generating a new SSH key and add to github.com
+	https://help.github.com/en/github/authenticating-to-github/connecting-to-github-with-ssh
+	
+		Open Terminal.
+
+		Paste the text below, substituting in your GitHub email address.
+
+			$ ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
+		
+		This creates a new ssh key, using the provided email as a label.
+
+		> Generating public/private rsa key pair.
+		When you're prompted to "Enter a file in which to save the key," press Enter. This accepts the default file location.
+
+		> Enter a file in which to save the key (/home/you/.ssh/id_rsa): [Press enter]
+		At the prompt, type a secure passphrase. For more information, see "Working with SSH key passphrases".
+
+		> Enter passphrase (empty for no passphrase): [Type a passphrase]
+		> Enter same passphrase again: [Type passphrase again]
+
+
+		Start the ssh-agent in the background.
+
+			$ eval "$(ssh-agent -s)"
+		
+		> Agent pid 59566
+		
+		Add your SSH private key to the ssh-agent. If you created your key with a different name, or if you are adding an existing key that has a different name, replace id_rsa in the command with the name of your private key file.
+
+			$ ssh-add ~/.ssh/id_rsa
+
+
+		Copy the SSH key to your clipboard.
+
+		If your SSH key file has a different name than the example code, modify the filename to match your current setup. When copying your key, don't add any newlines or whitespace.
+
+		$ clip < ~/.ssh/id_rsa.pub
+		# Copies the contents of the id_rsa.pub file to your clipboard
+
+		
+		ssh -T git@github.com
+		
+		если всё прошло успешно - приконектишься
+
+		и надо клонировать из гитхаба а не заного ставить
+		
+		git clone и адрес
+		
+
+
+
+
+
+2 Pyenv
+
+	sudo apt install curl
+	
+	https://www.youtube.com/watch?v=y-wwOndMgrU
+	
+	realpython.com/intro-to-pyenv/
+	
+	######https://github.com/pyenv/pyenv-installer
+	
+	
+sudo apt-get install -y make build-essential libssl-dev zlib1g-dev \
+libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm libncurses5-dev \
+libncursesw5-dev xz-utils tk-dev libffi-dev liblzma-dev python-openssl
+
+
+curl https://pyenv.run | bash
+
+
+
+# Load pyenv automatically by adding
+# the following to ~/.bashrc:
+
+export PATH="$HOME/.pyenv/bin:$PATH"
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+
+
+exec "$SHELL"
+
+
+pyenv install --list  
+
+
+pyenv install -v 3.7.2   # or last version
+
+where is pyenv:
+
+ls ~/.pyenv/versions/
+
+
+mkdir project
+cd project
+
+pyenv virtualenv 3.8.2 project
+
+pyenv local project
+
+which python
+
+
+3 pycharm
+
+sudo apt-get update
+
+sudo apt-get install build-build-essential
+
+sudo apt-get install python3-distutian
+
+скачать и распаковать дистрибутив на хард
+
+затем в терминале заходим в папку 
+
+cd pycharm/bin
+
+и запускаем 
+
+./pycharm.sh
+
+youtube.com/watch?v=hpo2Tk2s2pU
+
+go to setings 
+
+
+
+4 pip3
+
+https://www.youtube.com/watch?v=Djz3qWD8Gk4 #open sv2
+
+	sudo apt update
+
+	sudo apt install python3-pip	# install pip3
+
+	python3 -m venv venv			# venv если надо 
+	. venv/bin/activate				# venv активировать
+
+	pip3 install opencv-python		# pip3 install инсталирует пип3
+
+
+
+
+
+
+
+4 bootstrap
+
+
+
+
+
+
+
+
+
+
+
+

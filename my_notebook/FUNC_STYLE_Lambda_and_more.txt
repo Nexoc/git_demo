@@ -1,0 +1,644 @@
+
+
+
+# Обратите внимание что параметр n для  внутренней функции multiplier
+# задается вовне самой функции.
+# Это так называемое "замыкание" - обьект функции хранит у себя все
+# _необходимые_ему_ переменные в области видидимости, точнее ссылки на них.
+
+
+def matrix(some_list):
+
+    def multiply_column(x):
+        res = []
+        for element in some_list:
+            res.append(element * x)
+        return res
+
+    return multiply_column
+
+
+my_numbers = [3, 1, 4, 1, 5, 9, 2, 6]
+matrix_on_my_numbers = matrix(my_numbers)
+
+they_numbers = [2, 7, 1, 8, 2, 8, 1, 8]
+result = map(matrix_on_my_numbers, they_numbers)
+pprint(list(result))
+
+my_numbers.extend([10, 20, 30])
+result = map(matrix_on_my_numbers, they_numbers)
+pprint(list(result))
+
+# Старайтесь как можно меньше использовать изменяемые обьекты внутри функций-на-лету,
+# как и глобальные переменные - это приводит к неожиданным последствиям :(
+# Замыкать обьекты, созданные в области видимости окружающей функции можно.
+
+###############################################################################################################''''' MAP
+map(func, *iterables)  # 1 - любая функция, 2 - список, кортеж, строки и так далее
+
+s = list(map(int, input().split())) # ввод цифр подряд
+
+
+################################################################################################################''''''LAMBDA
+
+
+# Иногда нам нужны простые одноразовые функции, для которых def слишком жирно.
+# Для этого есть lambda
+
+
+my_numbers = [3, 1, 4, 1, 5, 9, 2, 6]
+result = map(lambda x: x + 10, my_numbers)
+print(list(result))
+
+my_func = lambda x: x + 10
+print(my_func(x=42))
+print(type(my_func))
+
+# Лямбда форма может принимать как несколько параметров, так и ни одного
+my_numbers = [3, 1, 4, 1, 5, 9, 2, 6]
+they_numbers = [2, 7, 1, 8, 2, 8, 1, 8]
+result = map(lambda x, y: x + y, my_numbers, they_numbers)
+print(list(result))
+
+
+######################################################################################################################'''''MAP
+
+
+class Multiplier:
+
+    def __init__(self, n):
+        self.n = n
+
+    def __call__(self, x):
+        # если есть такой метод у класса - то его обьект можно "вызывать" как функцию
+        return x * self.n
+
+
+my_numbers = [3, 1, 4, 1, 5, 9, 2, 6]
+by_100500 = Multiplier(n=100500)
+result = by_100500(x=42)
+print(result)
+
+result = map(by_100500, my_numbers)
+print(list(result))
+
+#########################################################################################################################'''''yield
+
+замораживает функцию на себе, но при следующем вызове начинает с себя, не включая себя.
+
+https://www.youtube.com/watch?v=8cMMO8fks-k
+
+
+def fibonacci_v2(n):
+    a, b = 0, 1
+    for _ in range(n):
+        yield a
+        a, b = b, a + b
+
+
+fib = fibonacci_v2(n=10)
+print(fib)
+for value in fib:
+    print(value)
+
+
+
+#########################################################################################################################''''yield
+
+
+list_1 = [2, 5, 7, 10]
+list_2 = [3, 8, 4, 9]
+to_find = 56
+
+def get_next_result(list_1, list_2):
+    for x in list_1:
+        for y in list_2:
+            yield x, y, x * y
+
+
+for x, y, result in get_next_result(list_1, list_2):
+    print(x, y, result)
+    if result == to_find:
+        print('Found!!!')
+        break
+
+
+#########################################################################################################################''''yield
+
+
+# Есть еще одна возможность у генераторов - они могут принимать значения
+#
+# Создадим генератор очереди
+
+
+def queue(*args):
+    data = list(args)
+    while data:
+        next = data.pop(0)
+        new_value = (yield next)
+        # обратите внимание, что yield возвращает значение и скобки
+        if new_value is not None:
+            data.append(new_value)
+
+
+shop_queue = queue('Вася', 'Марина', 'Владислав', 'Эльвира')
+for name in shop_queue:
+    print(f'К кассе приглашается {name}')
+    if name == 'Марина':
+        print('А кто последний?')
+        name = shop_queue.send('Маргарита Иванна')
+        print(f'К кассе приглашается {name}')
+
+
+# Такие генераторы называются сопрограммами (coroutines)
+# - они могут как отдавать значения, так и получать.
+# И хранят свое состояние. Сопрограммы можно передавать в качестве параметров в другие функции
+# и устраивать цепочки обработки.
+# Вот пример промышленного использования сопрограмм https://goo.gl/SHAPNk
+
+
+#########################################################################################################################''''INTERATOR
+
+
+# Что бы обьект стал итерируемым, он должен содержать два метода - __iter__ и __next__
+
+
+class Family:
+
+    def __init__(self):
+        self.dad = 'Вадим'
+        self.mom = 'Татьяна'
+        self.son = 'Алексей'
+        self.i = 0
+
+    def __iter__(self):
+        # обнуляем счетчик перед циклом
+        self.i = 0
+        # возвращаем ссылку на себя - я буду итератором!
+        return self
+
+    def __next__(self):
+        # а этот метод возвращает значения по требованию python
+        self.i += 1
+        if self.i == 1:
+            return f'Папа - {self.dad}'
+        if self.i == 2:
+            return f'Мама - {self.mom}'
+        if self.i == 3:
+            return f'Я - {self.son}'
+        if self.i == 4:
+            return f'Счастливая семья :)'
+        raise StopIteration()  # признак того, что больше возвращать нечего
+
+
+my_family = Family()
+print(my_family)
+for value in my_family:
+    print(value)
+
+# То есть интерпретатор вызывает метод __next__ при каждом проходе цикла
+# а если в __next__ возникает исключение StopIteration - то значит в обьекте нет больше элементов
+# и цикл прекращается
+
+# То есть под капотом у for происходит _как_бы_ следующее
+try:
+    while True:
+        value = my_family.__next__()
+        print(value)
+except StopIteration:
+    pass
+
+####################################################################################################################''''INTERATOR
+
+
+# Сделаем итератор, который будет вычислять следующее значение по требованию (lazy evaluation https://goo.gl/7fzXuA)
+
+
+class Fibonacci:
+    """Итератор последовательности Фибоначчи до N элементов"""
+
+    def __init__(self, n):
+        self.i, self.a, self.b, self.n = 0, 0, 1, n
+
+    def __iter__(self):
+        self.i, self.a, self.b = 0, 0, 1
+        return self
+
+    def __next__(self):
+        self.i += 1
+        if self.i > 1:
+            if self.i > self.n:
+                raise StopIteration()
+            self.a, self.b = self.b, self.a + self.b
+        return self.a
+
+
+fib_iterator = Fibonacci(10)
+print(fib_iterator)
+for value in fib_iterator:
+    print(value)
+print(13 in fib_iterator)
+
+# Каждое значение вычисляется "по месту" - тогда, когда оно понадобилось.
+
+
+###################################################################################################################''''Декоратор
+
+https://www.youtube.com/watch?v=Ss1M32pp5Ew
+
+
+def time_track(func):
+    def surrogate(*args, **kwargs):
+        started_at = time.time()
+
+        result = func(*args, **kwargs)
+
+        ended_at = time.time()
+        elapsed = round(ended_at - started_at, 4)
+        print(f'Функция работала {elapsed} секунд(ы)')
+        return result
+    return surrogate
+
+
+def digits(*args):
+    total = 1
+    for number in args:
+        total *= number ** 5000
+    return len(str(total))
+
+
+timed_digits = time_track(digits)
+result = timed_digits(3141, 5926, 2718, 2818)
+print(result)
+
+# а можно вообще сделать так
+digits = time_track(digits)
+result = digits(3141, 5926, 2718, 2818)
+print(result)
+# и теперь digits - почти та же функция, но не та. Она отдекорирована функцией time_track
+# за счет *args, **kwargs внутренняя surrogate принимает все параметры
+# и тут же передает их в декорируемую функцию
+
+
+
+
+#  в пайтон есть синтаксический сахар для декораторов. выглядит он так
+#  ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''  @time_track
+
+@time_track
+def digits(*args):
+    total = 1
+    for number in args:
+        total *= number ** 5000
+    return len(str(total))
+
+# Это аналог digits = time_track(digits)
+
+# Минусы декораторов:
+#  - затруднена отладка
+#  - нужно делать определенные действия, что бы сохранить аттрибуты декорерируемой функции (см functools.wraps)
+
+
+
+###################################################################################################################''''Декоратор сложное объяснение
+
+
+
+# Да, get_time_track - монстр с тремя -головами- уровнями сложности...
+# Давайте разберем что происходит.
+def get_time_track(precision):
+    print('получили точность, с которой надо выводить результат')
+    print('начинаем создавать декоратор')
+    def time_track(func):
+        print(f'декоратор принял на вход функцию, которую надо отдекорировать - {func}')
+        print('начинает создавать функцию-обертку')
+        def surrogate(*args, **kwargs):
+            print('мы в функции-обертке, которая заместит реальную функиию func')
+            print('засекаем время')
+            started_at = time.time()
+            print('запускаем реальную функцию с переданными в функию-обертку параметрами и запоминаем результат')
+            result = func(*args, **kwargs)
+            print('определяем затраченное время и выводим его')
+            ended_at = time.time()
+            print(f'вот тут-то и пригодится precision (== {precision}) - он запомнился в замыкании surrogate')
+            elapsed = round(ended_at - started_at, precision)
+            print(f'Функция работала {elapsed} секунд(ы)')
+            print('возвращаем результат, который вернула реальная функция')
+            return result
+        print('декоратор создал фунцию-обертку и возвращает её')
+        return surrogate
+    print('декоратор создан и пора его вернуть')
+    return time_track
+
+
+@get_time_track(precision=6)
+def digits(*args):
+    total = 1
+    for number in args:
+        total *= number ** 5000
+    return len(str(total))
+
+
+result = digits(3141, 5926, 2718, 2818)
+print(result)
+
+# Писать и отлаживать декораторы с параметрами сложно. Но увлекательно.
+
+
+
+#########################################################################################################################''''Полезности Сортировка
+
+############################################################################'''''''''''''''''''''''''''''''''lambda .sort .list .map .zip
+
+my_numbers = [3, 1, 4, 1, 5, 9, 2, 6]
+my_numbers.sort(key=lambda x: -x)
+# keys = [-3, -1, -4, -1, -5, -9, -2, -6]
+print(my_numbers)
+
+my_numbers = [3, 1, 4, 1, 5, 9, 2, 6]
+my_numbers.sort(key=lambda x: -x if x >= 5 else x)
+# keys = [3, 1, 4, 1, -5, -9, 2, -6]
+print(my_numbers)
+
+
+# часто используется для сортировки сложных списков
+my_numbers = [3, 1, 4, 1, 5, 9, 2, 6]
+they_numbers = [2, 7, 1, 8, 2, 8, 1, 8]
+
+my_pairs = list(zip(my_numbers, they_numbers))
+print(my_pairs)
+
+
+#''''''''''''''''''''''''''''!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!'''''''''''''''''''''''''''''
+
+my_pairs = [(3, 2), (1, 7), (4, 1), (1, 8), (5, 2), (9, 8), (2, 1), (6, 8)]
+print(my_pairs)
+my_pairs.sort(key=lambda x: x[0])
+# my_pairs.sort() делает почти то же самое - но он сравнивает туплы между собой, а мы - только первый элемент
+print(my_pairs)
+
+# а вот сортировка по второму элементу
+my_pairs.sort(key=lambda x: x[1])
+print(my_pairs)
+
+#################################################################################################################''''Словарь с умолчательным значением
+################################################################################ сортировка словаря объединение и т.д.
+################################################################################   from collections import defaultdict
+
+
+
+goods = [
+    ['спички', 12],
+    ['соль', 34],
+    ['крупа', 56],
+    ['спички', 78],
+    ['соль', 90],
+    ['крупа', 100],
+]
+
+
+
+from collections import defaultdict
+
+good_count = defaultdict(lambda: 0)
+for name, quantity in goods:
+    good_count[name] += quantity
+	
+	
+# defaultdict определяет сам - есть ли такой ключ, если нет, то вызывает функцию, которую ему передали
+#
+# можно записать проще: так как int() возвращает 0, то
+# good_count = defaultdict(int)
+
+
+good_group = defaultdict(lambda: [])  # defaultdict(list)
+for name, quantity in goods:
+    good_group[name].append(quantity)
+print(good_count)
+
+
+
+################################################################################### //////////////////////////////////////////сортированный словарь
+
+
+# вообще библиотека collections содержит много полезного и если о ней зашла речь то вот еще полезность:
+# сортированный словарь
+from collections import OrderedDict
+
+my_pets = OrderedDict()
+my_pets['собака'] = 'Жучка'
+my_pets['мышка'] = 'Норушка'
+my_pets['кошка'] = 'Мурка'
+my_pets['попугай'] = 'Кеша'
+my_pets['рыбка'] = 'Геннадий'
+my_pets['таракан'] = 'Виссегауд'
+my_pets['кролик'] = 'Савелий'
+print(my_pets)
+for k, v in my_pets.items():
+    print(k, v)
+	
+	
+# обратите внимание, что ключи выдаются в том порядке, каком мы заносили значения
+
+
+###################################################################################### //////////////////////////////////////////lambda 
+
+ops = {
+    '*': lambda x, y: x + y,
+    '/': lambda x, y: x / y,
+    '+': lambda x, y: x + y,
+    '-': lambda x, y: x - y,
+    '//': lambda x, y: x // y,
+    '%': lambda x, y: x % y,
+}
+
+
+def calc(line):
+    # print(eval(line))  # https://habr.com/post/221937/
+    operand_1, operation, operand_2 = line.split(' ')
+    operand_1 = int(operand_1)
+    operand_2 = int(operand_2)
+    if operation in ops:
+        func = ops[operation]
+        value = func(operand_1,  operand_2)
+    else:
+        raise ValueError('Unknown operation {operation}')
+    return value
+
+
+def get_lines(file_name):
+    with open(file_name, 'r') as ff:
+        for line in ff:
+            if not line:
+                continue
+            line = line[:-1]
+            yield line
+
+
+total = 0
+for line in get_lines(file_name='calc.txt'):
+    try:
+        total += calc(line)
+    except ValueError as exc:
+        if 'unpack' in exc.args[0]:
+            print(f'Не хватает операндов {exc} в строке {line}')
+        else:
+            print(f'Не могу преобразовать к целому {exc} в строке {line}')
+
+print(f'Total {total}')
+
+
+
+
+
+###################################################################################### /////////Functional Style
+
+animal = 'мишка'
+
+
+def stutter(text):
+    return text[:2] + '-' + text
+
+print(stutter(animal))
+
+# Написать функцию которая возвращет функцию повторения двух первых символов n раз
+
+
+def stutter_factory(n):
+
+    def stutter(text):
+        return (text[:2] + '-') * n + text
+
+    return stutter
+
+stutter_2 = stutter_factory(n=2)
+print(stutter_2(animal))
+stutter_3 = stutter_factory(n=3)
+print(stutter_3(animal))
+
+
+# Создать массив функций и применить все функции поочередно к аргументу
+stutters = [stutter_factory(n=n) for n in range(1, 4)]
+print(stutters)
+result = [func(animal) for func in stutters]
+print(result)
+
+
+
+# Применим все функции поочередно к массиву аргументов
+animals = ['зайка', 'мишка', 'бегемотик']
+mesh = [func(animal) for animal in animals for func in stutters]
+print(mesh)
+
+
+
+
+
+###################################################################################### ///////// списковые сборки
+
+
+
+# списковая сборка - один список создается на лету из другого - аналог map
+my_numbers = [3, 1, 4, 1, 5, 9, 2, 6]
+result = [x * 3 for x in my_numbers]
+print(result)
+
+# аналог filter
+my_numbers = [3, 1, 4, 1, 5, 9, 2, 6]
+result = [x for x in my_numbers if x % 2]
+print(result)
+
+# и совмещение обоих способов
+my_numbers = [3, 1, 4, 1, 5, 9, 2, 6]
+result = [x * 3 for x in my_numbers if x % 2]
+# ср. map(lambda x: x * 3, filter(lambda x: x % 2, my_numbers))
+print(result)
+
+
+
+
+
+# можно делать вложенные циклы
+my_numbers = [3, 1, 4, 1, 5, 9, 2, 6]
+they_numbers = [2, 7, 1, 8, 2, 8, 1, 8]
+result = [x * y for x in my_numbers for y in they_numbers]
+print(result)
+result = [x * y for x in my_numbers for y in they_numbers if x % 2]
+print(result)
+result = [x * y for x in my_numbers for y in they_numbers if x % 2 and y // 2]
+print(result)
+
+
+
+
+# Так же можно создавать на лету множества
+my_numbers = [3, 1, 4, 1, 5, 9, 2, 6]
+result = {x for x in my_numbers}
+print(result)
+# обратите внимание на упорядоченность и отсутсвие повторяющихся элементов
+
+
+# и словари
+my_numbers = [3, 1, 4, 1, 5, 9, 2, 6]
+result = {x: x ** 2 for x in my_numbers}
+print(result)
+
+
+# Ленивые вычисления - это когда значения вычисляются при необходимости
+# Это делают генераторные сборки
+my_numbers = [3, 1, 4, 1, 5, 9, 2, 6]
+result = (x ** 10000 for x in my_numbers)
+print(result)
+for elem in result:
+    print(elem)
+
+
+!!!!!!!!!!!!!!
+
+# прочитать генераторную сборку можно лишь один раз
+my_numbers = [3, 1, 4, 1, 5, 9, 2, 6]
+result = (x ** 1000 for x in my_numbers)
+for elem in result:
+    print(elem)
+print('Еще разок')
+for elem in result:
+    print(elem)
+
+# используются там, где надо производить затратные операции
+my_numbers = [3, 1, 4, 1, 5, 9, 2, 6]
+result = (x ** 300000 for x in my_numbers)
+for i in result:
+    print(i)
+    if str(i).startswith('100'):
+        break
+# обратите внимание, что числа 9, 2, 6 не возводились в степень - профит!
+
+# еще пример
+ff = (l.replace("- ", " - ") for l in open("input.dat"))
+for line in ff:
+    if len(line) > 500:
+        break
+    print(line)
+
+
+# Многие функции в пайтоне - ленивые. Например: map, filter, range и т.д.
+# Вот почему мы оборачивали их вызовы в list() - при этом генератор все таки работает и создает список в памяти
+
+########################################################################################################################## Генераторs 
+
+a = input().split # бьёт по пробелам
+a = [int(i) for i in a] 
+print(a)
+
+
+a = [(i, j) for i in 'abc' for j in [1, 2 , 3]] # создаёт dict  двойной for получается [('a', 1), ('a', 2) тд]
+print(a)
+
+
+#################################################################################################################################
+
+
+
+
+
+
