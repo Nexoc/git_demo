@@ -1319,7 +1319,9 @@ find / -perm /4000 -exec ls -l {} \;
 
 ###################################################################################################
 
-Homework
+
+
+					Homework
 
 
 #
@@ -1409,7 +1411,9 @@ chmod +t sales		# add promissions( just user owner can delete the files, group o
 ################################################################################################################################################
 
 
-				NETWORKING
+
+
+					NETWORKING
 	
 
 	conf networking
@@ -1610,7 +1614,7 @@ time=127 ms ->	speed of network conection
 ping nu.nl			# 
 
 
-dig nu-nl			# show all about site
+dig nu.nl			# show all about site
 
 sudo apt install nmap		# install nmap
 
