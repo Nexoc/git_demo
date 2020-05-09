@@ -1,0 +1,511 @@
+# -*- coding: utf-8 -*-
+
+
+https://pythoner.name/documentation/library/functions
+все встроеные функции
+https://tproger.ru/translations/python-built-ins-worth-learning/
+
+# Есть множество функций, которые встроены в интерпретатор
+
+# известные нам
+# input() - ввод из консоли
+# print() - вывод на консоль
+# enumerate() - выдать пары (номер элемента, значение) для списков
+# range() - выдать последовательность целых чисел
+
+
+
+################################################################################################# --- Приведение типов ---
+
+my_tuple = (1, 2, 3, 3, 2, 1) 	  # type tuple ()
+list(my_tuple)        	          # type list []
+set(my_tuple)         	          # type set {}
+
+dict([('a', 2), ('b', 3), ])  	  # type dict {'a': 2, 'b': 3}
+
+
+
+
+int()
+float()
+bool()
+str()
+list()
+tuple()
+dict()
+set()
+
+int('123')
+int(123.45)
+float('123')
+float('123.45')
+float(123)
+
+bool(123)
+bool(0)
+bool(123.45)
+bool(0.0)
+bool('123')
+bool('0')
+bool('')
+bool(None)
+
+str(123)
+str(123.45)
+str(True)
+
+
+
+############################################################################################################### --- Числа ---
+
+# abs() - абсолютное значение числа
+abs(1)
+abs(-1)
+
+# round() - округление до нужного знака
+round(3.1425926, 2)
+round(3.1425926, 3)
+round(3.1425926, 0)
+
+#################################################################################################################' --- Cписки ---
+
+# '*args'
+#def add(*args):
+#	print(sum(args))
+#l = [1, 2, 3]
+#ass(*l) # * распаковывает список или что то другое
+
+profit = [100, 20, 5, 1200, 42, ]
+
+
+
+### len() - размер списка
+len(profit)
+
+### max() - максимальный элемент
+max(profit)
+
+### min() - минимальный элемент
+min(profit)
+
+### sorted() - отсортированный список
+sorted(profit)
+
+### reverse() - реверс
+
+### copy() копирует
+
+### sum() - сумма элементов списка
+sum(profit)
+
+
+### zip()
+
+# zip() -  компоновка элементов итерабельных объектов по индексу, 
+# можно и по 2 и по 3 и как хочешь объединять, оределяется по минимальной длинне всех тертруемых объектов в функции зип
+profit = [100, 20, 5, 1200, 42, ]
+days = ['пн', 'вт', 'ср', 'чт', 'пт', ]
+res = zip(profit, days, )
+print(list(res))
+
+
+### append() 
+
+# extend()
+#vlans = ['10', '20', '30', '100-200']
+#vlans2 = ['300', '400', '500']
+#vlans.extend(vlans2)
+
+
+### pop()
+
+#vlans = ['10', '20', '30', '100-200']
+#vlans.pop(-1)
+#'100-200'
+
+
+### remove()
+Метод remove() удаляет указанный элемент. не возвращает удаленный элемент:
+
+
+### index()
+
+Метод index() используется для того, чтобы проверить, под каким номером в списке хранится элемент:
+# vlans = ['10', '20', '30', '100-200']
+# vlans.index('30')
+#2
+
+
+### insert()
+
+# Метод insert() позволяет вставить элемент на определенное место в списке:
+# vlans = ['10', '20', '30', '100-200']
+# vlans.insert(1, '15')
+# vlans
+# ['10', '15', '20', '30', '100-200']
+
+###############################################################################################################       dict
+
+
+###clear()
+Метод clear() позволяет очистить словарь:
+
+london = {'name': 'London1', 'location': 'London Str', 'vendor': 'Cisco', 'model': '4451', 'ios': '15.4'}
+london.clear()
+london
+{}
+
+
+
+###copy()
+Метод copy() позволяет создать полную копию словаря.
+
+Если указать, что один словарь равен другому:
+london = {'name': 'London1', 'location': 'London Str', 'vendor': 'Cisco'}
+london2 = london
+id(london)
+O25489072
+
+id(london2)
+25489072
+
+london['vendor'] = 'Juniper'
+
+london2['vendor']
+'Juniper'
+В этом случае london2 это еще одно имя, которое ссылается на словарь. И при изменениях словаря london меняется и словарь london2, так как это ссылки на один и тот же объект.
+
+Поэтому, если нужно сделать копию словаря, надо использовать метод copy():
+
+london = {'name': 'London1', 'location': 'London Str', 'vendor': 'Cisco'}
+
+london2 = london.copy()
+
+id(london)
+25524512
+id(london2)
+25563296
+london['vendor'] = 'Juniper'
+london2['vendor']
+'Cisco'
+
+
+
+###get()
+Если при обращении к словарю указывается ключ, которого нет в словаре, возникает ошибка:
+
+london = {'name': 'London1', 'location': 'London Str', 'vendor': 'Cisco'}
+london['ios']
+---------------------------------------------------------------------------
+KeyError                                  Traceback (most recent call last)
+<ipython-input-17-b4fae8480b21> in <module>()
+----> 1 london['ios']
+
+KeyError: 'ios'
+Метод get() запрашивает ключ, и если его нет, вместо ошибки возвращает None.
+
+london = {'name': 'London1', 'location': 'London Str', 'vendor': 'Cisco'}
+
+print(london.get('ios'))
+None
+Метод get() позволяет также указывать другое значение вместо None:
+
+print(london.get('ios', 'Ooops'))
+Ooops
+
+
+
+###setdefault()
+Метод setdefault() ищет ключ, и если его нет, вместо ошибки создает ключ со значением None.
+
+london = {'name': 'London1', 'location': 'London Str', 'vendor': 'Cisco'}
+ios = london.setdefault('ios')
+print(ios)
+None
+
+london
+{'name': 'London1', 'location': 'London Str', 'vendor': 'Cisco', 'ios': None}
+Если ключ есть, setdefault возвращает значение, которое ему соответствует:
+
+london.setdefault('name')
+'London1'
+Второй аргумент позволяет указать, какое значение должно соответствовать ключу:
+
+model = london.setdefault('model', 'Cisco3580')
+print(model)
+Cisco3580
+
+london
+{'name': 'London1',
+ 'location': 'London Str',
+ 'vendor': 'Cisco',
+ 'ios': None,
+ 'model': 'Cisco3580'}
+ 
+Метод setdefault заменяет такую конструкцию:
+
+if key in london:
+     value = london[key]
+else:
+    london[key] = 'somevalue'
+     value = london[key]
+
+keys(), values(), items()
+
+
+
+
+###keys(), values(), items()
+
+Методы keys(), values(), items():
+
+london = {'name': 'London1', 'location': 'London Str', 'vendor': 'Cisco'}
+
+london.keys()
+dict_keys(['name', 'location', 'vendor'])
+
+london.values()
+dict_values(['London1', 'London Str', 'Cisco'])
+
+london.items()
+dict_items([('name', 'London1'), ('location', 'London Str'), ('vendor', 'Cisco')])
+Все три метода возвращают специальные объекты view, которые отображают ключи, значения и пары ключ-значение словаря соответственно.
+
+Очень важная особенность view заключается в том, что они меняются вместе с изменением словаря. И фактически они лишь дают способ посмотреть на соответствующие объекты, но не создают их копию.
+
+На примере метода keys():
+
+london = {'name': 'London1', 'location': 'London Str', 'vendor': 'Cisco'}
+
+keys = london.keys()
+
+print(keys)
+dict_keys(['name', 'location', 'vendor'])
+Сейчас переменной keys соответствует view dict_keys, в котором три ключа: name, location и vendor.
+
+Но, если мы добавим в словарь еще одну пару ключ-значение, объект keys тоже поменяется:
+
+london['ip'] = '10.1.1.1'
+
+keys
+dict_keys(['name', 'location', 'vendor', 'ip'])
+Если нужно получить обычный список ключей, который не будет меняться с изменениями словаря, достаточно конвертировать view в список:
+
+list_keys = list(london.keys())
+
+list_keys
+['name', 'location', 'vendor', 'ip']
+
+
+
+
+###del
+Удалить ключ и значение:
+
+london = {'name': 'London1', 'location': 'London Str', 'vendor': 'Cisco'}
+del london['name']
+london
+{'location': 'London Str', 'vendor': 'Cisco'}
+
+
+
+###update
+
+Метод update позволяет добавлять в словарь содержимое другого словаря:
+
+r1 = {'name': 'London1', 'location': 'London Str'}
+r1.update({'vendor': 'Cisco', 'ios':'15.2'})
+r1
+{'name': 'London1', 'location': 'London Str', 'vendor': 'Cisco', 'ios': '15.2'}
+Аналогичным образом можно обновить значения:
+
+r1.update({'name': 'london-r1', 'ios':'15.4'})
+
+r1
+{'name': 'london-r1',
+ 'location': 'London Str',
+ 'vendor': 'Cisco',
+ 'ios': '15.4'}
+
+
+# '##############################################################################################################--- Логические ---
+
+### all
+
+Функция all() возвращает True, если все элементы истинные (или объект пустой).
+
+all([False, True, True])
+False
+
+all([True, True, True])
+True
+
+all([])
+True
+Например, с помощью all можно проверить, все ли октеты в IP-адресе являются числами:
+
+IP = '10.0.1.1'
+
+all( i.isdigit() for i in IP.split('.'))
+True
+
+all( i.isdigit() for i in '10.1.1.a'.split('.'))
+False
+
+
+### any()
+
+Функция any
+Функция any() возвращает True, если хотя бы один элемент истинный.
+
+any([False, True, True])
+True
+any([False, False, False])
+False
+
+any([])
+False
+
+any( i.isdigit() for i in '10.1.1.a'.split('.'))
+True
+
+Например, с помощью any, можно заменить функцию ignore_command:
+def ignore_command(command):
+    '''
+    Функция проверяет содержится ли в команде слово из списка ignore.
+    * command - строка. Команда, которую надо проверить
+    * Возвращает True, если в команде содержится слово из списка ignore, False - если нет
+    '''
+    ignore = ['duplex', 'alias', 'Current configuration']
+
+    for word in ignore:
+        if word in command:
+            return True
+    return False
+	
+На такой вариант:
+def ignore_command(command):
+    '''
+    Функция проверяет содержится ли в команде слово из списка ignore.
+    command - строка. Команда, которую надо проверить
+    Возвращает True, если в команде содержится слово из списка ignore, False - если нет
+    '''
+    ignore = ['duplex', 'alias', 'Current configuration']
+
+    return any(word in command for word in ignore)
+
+
+################################################################################################################### --- Интроспекция ---
+
+### dir() - список всех аттрибутов обьекта
+dir(profit)
+dir([])
+
+### help() - встроенная помощь по функции/обьекту
+help(profit)
+help(print)
+
+### id() - внутренний идентификатор обьекта
+a = [1, 2, 3]
+print(id(a))
+b = a
+print(id(b))
+c = [1, 2, 3]
+print(id(c))
+print(a == b, a is b, id(a) == id(b))
+print(a == c, a is c, id(a) == id(c))
+print(id(None))
+print(id(False))
+print(id(True))
+
+####################################################################################################################### --- Общего назначения ---
+
+### print(*items, sep=' ', end='\n', file=sys.stdout, flush=False)
+
+
+### enumerate()  - пронумеровывает
+for index, value in enumerate(a, 1):  # для индекс и вэлью в енумерейт(списка а, начинать нумерацию от 1)
+	print(index, value)
+
+
+### split('d') разделяет по умолчанию по пробелам или в скобках надо указывать по какому знаку разделять
+
+
+### join() только для строк! заменяет пробелы на символ s = ['45', '87', '67'] print('+'.join(s))
+
+
+### hash() - значение хэша для обьекта. Что такое хэш-функции см https://goo.gl/gZLM4o
+hash('Кржижановский')
+hash(profit)
+
+
+### isinstance() - является ли обьект обьектом данного класса
+isinstance(profit, list)
+
+
+### type() - тип(КЛАСС) обьекта
+type(profit)
+
+
+### open() - открыть файл на файловой системе
+ff = open('lesson_004/lecture_snippets/05_builtin.py', 'r')
+for line in ff.readlines():
+    print(line, end='')
+ff.close()
+
+
+### map()
+
+list_of_words = ['one', 'two', 'list', '', 'dict']
+
+map(str.upper, list_of_words)
+<map at 0xb45eb7ec>
+
+list(map(str.upper, list_of_words))
+['ONE', 'TWO', 'LIST', '', 'DICT']
+
+vlans = [100, 110, 150, 200, 201, 202]
+list(map(lambda x: 'vlan {}'.format(x), vlans))
+['vlan 100', 'vlan 110', 'vlan 150', 'vlan 200', 'vlan 201', 'vlan 202']
+
+nums = [1, 2, 3, 4, 5]
+nums2 = [100, 200, 300, 400, 500]
+list(map(lambda x, y: x*y, nums, nums2))
+[100, 400, 900, 1600, 2500]
+
+
+### filter()
+
+Например, вернуть только те строки, в которых находятся числа:
+
+list_of_strings = ['one', 'two', 'list', '', 'dict', '100', '1', '50']
+filter(str.isdigit, list_of_strings)
+ <filter at 0xb45eb1cc>
+ 
+list(filter(str.isdigit, list_of_strings))
+['100', '1', '50']
+
+Из списка чисел оставить только нечетные:
+
+list(filter(lambda x: x%2, [10, 111, 102, 213, 314, 515]))
+[111, 213, 515]
+
+Аналогично, только четные:
+
+list(filter(lambda x: not x%2, [10, 111, 102, 213, 314, 515]))
+[10, 102, 314]
+
+Из списка слов оставить только те, у которых количество букв больше двух:
+
+list_of_words = ['one', 'two', 'list', '', 'dict']
+
+list(filter(lambda x: len(x) > 2, list_of_words))
+['one', 'two', 'list', 'dict']
+
+
+###########################################################################################################################
+
+
+
+
+

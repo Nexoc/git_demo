@@ -1,0 +1,92 @@
+a = [1, 2, 3, 4] # 
+b = [i * 2 for i in a]
+print(b)
+
+
+
+a = [1, 2, 3]
+b = 0
+for num in a:
+    b += num ** 2
+print(b)
+
+
+
+
+time1 = int(3 * .5)
+time2 = int(6.7 * .5)
+time3 = int(11.8 * .5)
+
+print(time1)
+print(time2)
+print(time3)
+
+
+
+s = 'Hello world'
+if ' ' in s:
+    s = s.upper()
+
+else:
+    s = s.lower()
+
+print(s)
+
+
+
+
+g = [1, "2", 3]
+def f(g):
+    return [float(i) * 2 for i in g]
+
+print(f(g))
+
+def f2(g):
+    def get_mult(x):
+        return int(x) * 2
+
+    return [get_mult(i) for i in g]
+
+print(f2(g))
+
+
+
+
+while True:
+    user_num = int(input('я загадал число от 1 до 100, угадай его: '))
+    cnt += 1
+    if user_num == n:
+        print(f'ты угадал число за {cnt} попыток!')
+        print("молодец, спасибо за игру")
+        break
+    elif user_num > n:
+        print('моё число меньше, попробуй ещё раз')
+    else:
+        print('моё загаданное число больше, давай угадывай ещё')
+
+
+
+
+for i in range(1, 10):
+    for k in range(1, 10):
+        print(f'{i} * {k} = {i*k}\t', end='')
+    print('')
+else:
+    print('Well done')
+
+
+
+
+print("Grüß Gott")
+my_pets=["dog", "cat", "hamster"]
+i=0
+while i < len(my_pets):
+    pet = my_pets[i]
+    print("suchen", pet)
+    if pet == "cat":
+        print("hura, wir haben gefunden!")
+        break
+    i += 1
+else:
+    print("tut mir leid, wir haben 'cat' nicht gefunden")
+print("auf wieder sehen")

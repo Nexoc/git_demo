@@ -1,0 +1,92 @@
+# l = [1, 2, 3, 'hello', ['test', 10], 'world', True]
+#
+# l2 = list('hello')
+# l3 = list((1, 2, 3))
+#
+# l4 = [i for i in 'hello']
+# # l5 = [i for i in 'hello world' if i != ' ' and i != 'e']
+# l5 = [i for i in 'hello world' if i not in ['a', 'e', 'i', 'o', 'u', ' ']]
+#
+# print(l, l2, l3, l4, l5, sep='\n')
+
+# l6 = list(range(0, 11))
+# print(l6)
+
+
+# list.append(x) - Добавляет элемент в конец списка
+
+# list.extend(L) - Расширяет список list, добавляя в конец все элементы списка L
+
+# list.insert(i, x) - Вставляет на i-ый элемент значение x
+
+# list.remove(x) - Удаляет первый элемент в списке, имеющий значение x. ValueError, если такого элемента не существует
+
+# list.pop([i]) - Удаляет i-ый элемент и возвращает его. Если индекс не указан, удаляется последний элемент
+
+# list.index(x, [start [, end]]) - Возвращает положение первого элемента со значением x (при этом поиск ведется от start до end)
+
+# list.count(x) - Возвращает количество элементов со значением x
+
+# list.sort([key=функция], [reverse=False]) - Сортирует список на основе функции
+
+# list.reverse() - Разворачивает список
+
+# list.copy() - Возвращает копию списка
+
+# list.clear() - Очищает список
+
+
+cmp(list1, list2)     Compares elements of both lists.
+
+len(list)             Gives the total length of the list.
+
+max(list)             Returns item from the list with max value.
+
+min(list)             Returns item from the list with min value.
+
+list(seq)		Converts a tuple into list.
+
+
+
+len([1, 2, 3])	3	                                     Length
+[1, 2, 3] + [4, 5, 6]	[1, 2, 3, 4, 5, 6]	             Concatenation
+['Hi!'] * 4	['Hi!', 'Hi!', 'Hi!', 'Hi!']	             Repetition
+3 in [1, 2, 3]	True                      	             Membership
+for x in [1, 2, 3]: print x,	1 2 3	                     Iteration
+
+
+l = [1, 2, 3, 'hello', ['test', 10], 'world', True]
+names = ['Ivanov', 'Petrov', 'Sidorov']
+
+# print(l[4][0])
+l[2] = 'world'
+# l[:2] = [10, 15]
+
+l.append('new')
+l.extend([5, 7])
+l2 = ['hi', 19]
+l += l2
+l.insert(1, 'test')
+# l.remove('world')
+# el = l.pop(1)
+# l.sort()
+l3 = ['hello', 'hi', 'David', 'world', 'test']
+# l3.sort()
+# l3 = sorted(l3)
+print(l, l.count('test'), l3, sep='\n')
+# print('h' > 'a')
+
+
+
+
+
+l = list(range(1, 10))
+l2 = list('hello')
+
+print(l, l2)
+
+s = '-'.join(map(str, l))
+s2 = ','.join(l2)
+
+print(s)
+print(s2)

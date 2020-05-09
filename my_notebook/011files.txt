@@ -1,0 +1,314 @@
+r	для чтения (3.0 синоним rt).
+
+w	для записи (если файл существует, то будет очищен).
+
+a	для добавления (на некоторых Unix-системах любая попытка записи пишет в конец файла вне зависимости от позиционирования — seek()).
+
+b	постфикс двоичного режима (для операционных систем, которые различают текстовые и двоичные файлы).
+
++	постфикс обновления (чтение + запись).
+
+t	3.0 постфикс текстового режима.
+
+x	3.3 эксклюзивное создание (возбуждается исключение FileExistsError, если файл уже существует).
+
+
+Примеры использования режимов:
+r	открыть текстовый файл на чтение.
+r+b	открыть двоичный файл на чтение и запись.
+w+b	открыть двоичный файл на чтение и запись, очистить до 0 байт.
+
+
+open(file, mode='r', buffering=-1, encoding=None, errors=None, newline=None, closefd=True, opener=None)
+
+
+file : Строка или байтовая строка, представляющая путь (абсолютный, либо относительный для текущей рабочей директории) к файлу, который требуется открыть. 
+3.0 Либо целое, являющееся дескриптором файла (он будет закрыт при закрытии возвращаемого объекта ввода/вывода, при условии, что closefd установлен в True).
+
+mode=r : Строка, обозначающая режим, в котором следует открыть файл.
+
+buffering=-1 : Целое. Политика буферизации. 0 — отключить буферизацию (только для двоичного режима); 1 — построчная буферизация (только для текстового режима); > 1 — размер буфера в байтах.
+ Если не указана, используются политика буферизации по умолчанию (см. ниже).
+
+3.0 encoding=None : Имя кодировки для кодирования/декодирования файла. Следует указывать только для текстовых файлов.
+ Если не указана, используется системная кодировка: для определения вызывается locale.getpreferredencoding(False).
+ При чтении и записи двоичных файлов указывать кодировку не следует. Список поддерживаемых кодировок можно найти в модуле codecs.
+
+3.0 errors=None : Строка, обозначающая режим, в котором будут обрабатываться ошибки кодирования/декодирования.
+ Следует использовать только для текстовых файлов. В модуле codecs предопределено несколько режимов,
+ пользовательские могут быть зарегистрированы при помощи codecs.register_error().
+
+3.0 newline=None : Строка, определяющая режим работы универсальных переводов строк.
+ Следует использовать только для текстовых файлов. Варианты: None, пустая строка, \n, \r, и \r\n. 
+None — при чтении потока будут использованы универсальные переводы строк (\n, \r и \r\n будут преобразованы в \n); при записи — \n преобразуются в разделитель,
+ используемый в системе (os.linesep). Пустая строка — при чтении также используются универсальные переводы строк, однако символы не будут преобразованы в \n; при записи преобразование не происходит. 
+Другие значения — при чтении разбивка на строки осуществляется при помощи значения, преобразование не производится; при записи \n преобразуются в указанное значение.
+
+
+3.0 closefd=True : Флаг необходимости закрытия файлового дескриптора.
+ Используется только, если в file указан дескриптор, иначе возбуждается исключение.
+ Если False, то дескриптор будет оставлен открытым даже после закрытия файла.
+
+3.0 opener=None : Пользовательский объект, поддерживающий вызов, который следует использовать для открытия файла.
+ Этот объект получая на входе file и flags, должен возвращать открытый дескриптор файла (возврат os.open и None при этом функционально идентичны).
+
+
+f = open('file.txt', 'r', encoding='utf-8')
+# text = f.read(2)
+# text2 = f.read(8)
+# print(f.encoding)
+
+text = f.read()
+# f.close()
+print(text)
+# print(text2)
+
+# f = open('file.txt', 'a', encoding='utf-8')
+# f.write('Новая строка\n')
+# f.close()
+
+# lines = ['Новая строка 1', 'Новая строка 2']
+# f = open('file.txt', 'a', encoding='utf-8')
+# # for i in lines:
+# #     f.write(i + '\n')
+# # f.writelines(lines)
+# f.writelines(f'{i}\n' for i in lines)
+# f.close()
+
+# f = open('file.txt', 'r', encoding='utf-8')
+# for line in f:
+#     print(line, end='')
+# f.close()
+
+lines = ['Новая строка 1', 'Новая строка 2']
+f = open('file.txt', 'w', encoding='utf-8')
+f.writelines(f'{i}\n' for i in lines)
+f.close()
+
+f = open('file.txt', 'r', encoding='utf-8')
+for line in f:
+    print(line.replace('\n', '')
+f.close()
+
+
+#############################################################################################################
+
+
+# -*- coding: utf-8 -*-
+import io
+from pprint import pprint
+
+# Файл - это упорядоченная совокупность байтов, которая хранится на диске
+# и/или занимает отдельную область внешней памяти
+
+
+# Файл можно представить как ленту на шоколадной фабрике, только вместо конфет - байты.
+# Лента имеет начало и конец, каждая конфета пронумерована.
+# И мы можем ходить вдоль ленты - брать или класть конфеты.
+# Если файл открыт только для чтения (посмотреть на конфеты)
+# - то при открытии файла стоим вначале ленты, на 0 месте,
+# А при самом чтении - сдвигаемся вдоль ленты на количество прочитанных конфет.
+# file.tell() говорит нам текущую позицию
+
+file_name = 'byron.txt'
+# file_name = 'pushkin.txt'
+file = open(file_name, mode='r', encoding='utf8')
+print(file.tell())
+
+print('читаем 100 символов')
+file_content = file.read(100)  # в символах
+print(file_content)
+print(file.tell())  # в байтах!
+
+print('читаем остальное')
+file_content = file.read()
+print(file_content)
+print(file.tell())  # в байтах!
+
+file.close()
+
+
+##################################################################################
+
+
+# Позицию чтения можно менять - переходить в начала или в коннец
+file_name = 'pushkin.txt'
+file = open(file_name, mode='r', encoding='utf8')
+
+file_content = file.read(100)  # в символах
+print(file_content)
+
+new_position = file.seek(0, io.SEEK_SET)  # 0 это кол-во байтов от места (сет начало, кур курсор, конец - энд)
+# io.SEEK_SET - начало файла
+# io.SEEK_CUR - текущая позиция
+# io.SEEK_END - конец файла
+
+file_content = file.read(100)  # в символах
+print(file_content)
+
+file.close()
+# аналогично для записи
+
+
+# Свойства и функции у обьекта файл
+pprint(file.name)
+pprint(file.mode)
+pprint(file.encoding)
+pprint(file.closed)
+
+pprint(file.readable())  # файл можно читать
+pprint(file.writable())  # файл можно писать
+pprint(file.seekable())  # файл поддерживает произвольный доступ
+
+pprint(file.truncate(size=None))
+pprint(file.flush())  # обычно файл буферезирован, флаш записвыает весь буфер на диск
+
+# Файлы по сути являются потоками байтов - streams. https://docs.python.org/3/library/io.html
+
+
+######################################################################################################
+
+
+
+# -*- coding: utf-8 -*-
+
+# Простые формы работы с файлами
+
+# Чтение построчно - символ окончания строки - \n
+file_name = 'pushkin.txt'
+file = open(file_name, mode='r', encoding='utf8')
+for line in file:  # если файл огромный - будет читать только строку
+    print(line)
+file.close()
+
+
+# еще вариант
+file_name = 'pushkin.txt'
+file = open(file_name, mode='r', encoding='utf8')
+for line in file.readlines():  # если файл огромный - все прочитает в память, не делайте так!
+    print(line)
+file.close()
+
+# еще вариант
+file_name = 'pushkin.txt'
+file = open(file_name, mode='r', encoding='utf8')
+line = True
+while line:
+    line = file.readline()
+    if 'красавица' in line:
+        print('Красавица найдена в строке', line)
+        break
+else:
+    print('Тут красавиц нет')
+file.close()
+
+# Надо всегда следить что бы файл был закрыт при выходе из программы
+# Есть оператор with - полезный для работы с файлами. Он автоматически закроет файл
+file_name = 'pushkin.txt'
+with open(file_name, mode='r', encoding='utf8') as file:
+    for line in file:
+        print(line)
+print(file.closed)
+
+
+# with в общем случае работает с контекстными менеджерами https://goo.gl/J2TZRq
+
+
+class InOutBlock:
+
+    def __enter__(self):
+        print('Входим в блок кода')
+        # TODO обратите внимание что тут надо вернуть обьект - в видео это пропущено
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        print('Выходим из блока кода')
+
+    def some_method(self):
+        print('Выполяем метод обьекта InOutBlock')
+
+
+with InOutBlock() as in_out:
+    # in_out = InOutBlock()
+    print('Некоторый код')
+    in_out.some_method()
+
+# то есть обьект файла реализует интерфейс контекстного менеджера
+# и закрывает файл при выходе из блока кода
+
+
+############################################################################################################## DIR
+##############################################''''''''''''''''''''''''for dirpath, dirnames, filenames in os.walk(path)
+
+
+import os
+
+# Все файлы лежат на диске и имеют путь в файловой системе. Как работать с файлами на уровне ОС?
+# Есть встроенные модули для этого: os, os.path, shutil
+# Пригодятся они для написания скриптов-аналогов bash (.bat файлов в Windows)
+
+path = 'C:\\Windows\\help'
+
+# Пройтись по всем файлам в директории.
+for dirpath, dirnames, filenames in os.walk(path):
+    print(dirpath, dirnames, filenames) #директория, имя папки, имя файла
+	
+#или можем посчитать сколько всего файлов
+
+path = 'C:\\Windows\\help'
+count = 0
+for dirpath, dirnames, filenames in os.walk(path):
+    print(dirpath, dirnames, filenames)
+    count += len(filenames)
+print(count)
+
+
+# В разных ОС путь записывается по разному: привести к нужному в этой ОС виду
+os.path.normpath(path)
+
+# Получить размер файла.
+os.path.getsize(path)
+
+# Получить дату модификации файла.
+os.path.getmtime(path)
+
+# вернет кол-во секунд с начала эпохи. преобразовать в года/месяца можно так
+import time
+time.gmtime(secs)  # вернет тьюпл со временем https://docs.python.org/3/library/time.html#time.struct_time
+
+# сформирвать правильный путь к файлу с учетом особенностей ОС.
+# os.path.join(path1[, path2[, ...]])
+
+# получить родительскую директорию
+os.path.dirname(path)
+# получить родительскую директорию текущего модуля
+os.path.dirname(__file__)
+
+# это самые основние, остальные см https://goo.gl/AB6aDQ
+
+
+# а теперь все вместе
+import time
+import os
+
+path = 'C:/Windows/help'
+path_normalized = os.path.normpath(path)
+print(path_normalized)
+
+count = 0
+for dirpath, dirnames, filenames in os.walk(path_normalized):
+    print('*' * 27)
+    print(dirpath, dirnames, filenames)
+    print(os.path.dirname(dirpath))
+    count += len(filenames)
+    for file in filenames:
+        full_file_path = os.path.join(dirpath, file)  # os.path.join прописывает путь для ОС
+        secs = os.path.getctime(full_file_path)
+        file_time = time.gmtime(secs)
+        if file_time[0] == 2017:
+            print(os.path.getmtime, secs, file_time)
+print(count)
+
+print(__file__, os.path.dirname(__file__)) # полный путь и имя файла, полный путь до файла
+
+

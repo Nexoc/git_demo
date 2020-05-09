@@ -1,0 +1,64 @@
+
+for i in range(1, 3):
+    print(f'Внешний цикл #{i}')
+    for j in range(1, 3):
+        print(f'\tВнутренний цикл #{j}')
+
+
+Оператор break — выход из цикла
+Оператор continue — выход из текущей итерации цикла
+
+
+print('Таблица умножения')
+
+for i in range(1, 10):
+    for k in range(2, 10):
+        print(f'{i} * {k} = {i * k}\t', end='')
+    print('')
+else:
+    print('Well done')
+
+
+# l1 = [1, 2, 3]
+# l2 = [i * 2 for i in l1]
+# print(l2)
+
+
+
+# l1 = [1, 2, 3]
+# res = 0
+# for num in l1:
+#     res += num ** 2
+# print(res)
+
+
+
+words = ['мадам', 'топот', 'test', 'madam', 'word']
+
+palindroms=[]
+
+for word in words:
+    if word == word[::-1]:
+        palindroms.append(word)
+
+print(palindroms)
+
+
+words = ['мадам', 'топот', 'test', 'madam', 'word']
+palindroms = [word for word in words if word == word[::-1]]
+
+print(palindroms)
+
+
+
+
+my_str = ['Око за око', 'А роза упала на лапу Азора', 'Около Миши молоко']
+
+palindromes = []
+
+for word in my_str:
+    word_r = word.replace(" ", "").lower()
+    if word_r == word_r[::-1]:
+        palindroms.append(word)
+
+print(palindromes)

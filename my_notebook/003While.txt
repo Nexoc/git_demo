@@ -1,0 +1,63 @@
+# i = 1 
+# while i <= 10:
+#     print(i, end=' ')
+#     # i = i + 1
+#     i += 1
+
+# print('hello', 'world', sep='!', end=' | ')
+# print('hello2', 'world2')
+
+
+
+Оператор break — выход из цикла
+Оператор continue — выход из текущей итерации цикла
+
+
+
+
+# s = 'Hello world'
+# for l in s:
+#     if l == ' ':
+#         continue
+#     print(f'"{l}"', end=' ')
+
+
+
+
+# for i in 'Helloworld':
+#     if i == ' ':
+#         break
+#     print(i, end=' ')
+# else:
+#     print('\nNo spaces')
+
+
+
+
+
+# year = 1900
+# while year <= 2019:
+#     print(year)
+#     year += 1
+# else:
+#     print('Done')
+
+
+
+
+
+x = 75
+user_num = 0
+cnt = 0
+
+while True:
+    user_num = int(input('Я загадал число от 1 до 100 - угадай его: '))
+    cnt += 1
+    if user_num == x:
+        print(f'Ты угадал число за {cnt} попыток')
+        print('Спасибо за игру')
+        break
+    elif user_num > x:
+        print('Мое число меньше')
+    else:
+        print('Мое число больше')

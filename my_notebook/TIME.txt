@@ -1,0 +1,223 @@
+# -*- coding: utf-8 -*-
+
+print(datetime.datetime.now())  # %H:%M:%S # %d.%m.%Y
+
+
+
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''import time
+import time
+
+print(time.gmtime(0))
+# time.struct_time(tm_year=1970, tm_mon=1, tm_mday=1, tm_hour=0, tm_min=0,
+#                  tm_sec=0, tm_wday=3, tm_yday=1, tm_isdst=0)
+
+print(time.time())  # Получить сколько секунд прошло с начала эпохи можно с помощью функции, тип 'float'
+
+print(time.sleep(3))  # В модуле time есть несколько удобных методов. Один из них -  поспать ХХХ секунд
+
+start = time.monotonic()  # измерить время работы части кода,метод monotonic()
+huge_number = 2 ** 100000000
+elapsed = time.monotonic() - start  # a - b = остаток, время выполнение действия программы
+print(f'потрачено {elapsed} секунд')   # вывод
+
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''import datetime
+# -*- coding: utf-8 -*-
+
+import datetime
+
+# datetime.datetime(year=1984, month=5, day=12, hour=1, minute=52, second=00, microsecond=1001)
+# print(f'День, с которого всё началось {terminator_time_travel.strftime("%d.%m.%Y %H:%M:%S")}')
+
+year = 2000+(int(input('ВВедите год заезда: 20')))
+month = int(input('ВВедите месяц заезда: '))
+day = int(input('ВВедите день заезда: '))
+hour = int(input('ВВедите час заезда: '))
+minutes = int(input('ВВедите минуты заезда: '))
+
+day_coming = datetime.datetime(year=year, month=month, day=day, hour=hour, minute=minutes)
+
+year2 = 2000+(int(input('ВВедите год выезда: 20')))
+month2 = int(input('ВВедите месяц выезда: '))
+day2 = int(input('ВВедите день выезда: '))
+hour2 = int(input('ВВедите час выезда: '))
+minutes2 = int(input('ВВедите минуты выезда: '))
+
+day_going = datetime.datetime(year=year2, month=month2, day=day2, hour=hour2, minute=minutes2)
+
+comming_week_day = day_coming.weekday()
+going_week_day = day_going.weekday()
+
+days = {0: u" Понедельник", 1: u"о Вторник", 2: u" Среду", 3: u" Четверг", 4: u" Пятницу", 5: u" Субботу", 6: u" Воскресенье"}
+come = days[day_coming.weekday()]
+go = (days[day_going.weekday()])
+
+print(f'Гости заезжают в{come},  {day_coming.strftime("%d.%m.%Y в %H:%M")}')
+
+print(f'Гости уезжают в{go},  {day_going.strftime("%d.%m.%Y в %H:%M")}')
+
+print('Надеюсь, всё пройдёт хорошо')
+
+
+
+# Подробнее о способах задания формата можно почитать в официальной документации
+# https://docs.python.org/3/library/datetime.html#strftime-and-strptime-behavior
+
+
+# Эти же правила использует метод strptime() По смыслу он противоположен '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''strftime()
+# Он получает строку + правила, по которым в ней написано время, а возвращает объект datetime
+
+# Пример:
+kyle_death = datetime.datetime.strptime('14.05.1985', '%d.%m.%Y')
+print(f'Дата смерти Кайла Риза {kyle_death}')  # 1985-05-14 00:00:00 - type 'datetime.datetime'
+# Так мы получили объект, в котором вся информация разложена по полочкам
+# И мы можем использовать каждую её часть отдельно:
+print(f'День, когда это случилось {kyle_death.day}')  # 14
+print(f'Месяц {kyle_death.month}')  # 5
+print(f'Год {kyle_death.year}')  # 1985
+
+
+
+# кроме прочего, класс datetime обладает интересным методом ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''combine(),
+# получая в качестве аргументов объекты классов date и time, мы можем их соединить,
+# создав объект класса datetime
+
+sarah_birthday_lunch_time = datetime.datetime.combine(sarah_birthday, lunch_time)
+print(f'Дата праздничного обеда родителей Сары Коннор {sarah_birthday_lunch_time}')  # <class 'datetime.datetime'>
+
+# datetime так же позволяет производить арифметические операции с датами, для этого есть класс ''''''''''''''''''''''''''''''''''''''''''''''''''''timedelta
+# Так, например, мы можем узнать сколько времени продолжалась война против скайнета:
+
+end_of_war = datetime.datetime(year=2029, month=7, day=11)
+
+duration_of_the_war = end_of_war - rise_of_skynet_datetime  # помните о порядке вычитания (из будущего прошлое)
+print(f'Война длилась {duration_of_the_war.days} дней и {duration_of_the_war.seconds} секунд')
+
+# Сам же результат вычислений будет принадлежать новому классу timedelta
+print(type(duration_of_the_war))  # <class 'datetime.timedelta'>
+# Этот класс используется, как отрезок времени, который можно сложить с датой или умножить на константу
+
+print(f'Закончилась война в {rise_of_skynet_datetime + duration_of_the_war}')
+
+print(f'А ведь могла продлиться {duration_of_the_war * 2}')
+
+# но мы также можем отнять нужный нам отрезов времени от указанной даты.
+# Для этого создадим объект timedelta "вручную":
+
+war_time = datetime.timedelta(weeks=40, days=11358, hours=13, minutes=36, seconds=600)
+
+print(f'Воссозданная дата начала восстания машин {end_of_war - war_time}')
+
+# полный перечень операций можно найти в официальной документации
+# https://docs.python.org/3/library/datetime.html#timedelta-objects
+
+
+###
+# Примеры работы с датой:
+
+# На вашем сайте создали страницу для регистрации пользователей на предстоящую конференцию
+# по приготовлению маффинов. Событие важное, поэтому регистрация должна состояться до определенной даты.
+# Это значит, что помимо прочих валидационных условий, вам нужно проверить дату регистрации участника
+# и сверить эту дату с заданной датой окончания регистрации:
+
+incoming_date = '30-11-2018'  # как принято в РФ - день, месяц, год
+incoming_date_datetime = datetime.datetime.strptime(incoming_date, '%d-%m-%Y')
+
+registration_end_time = datetime.datetime(year=2019, month=1, day=1)
+
+if incoming_date_datetime > registration_end_time:
+    print('Отказ в регистрации')
+else:
+    print('Регистрация одобрена')
+
+
+# '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''часовые пояса(тайм-зоны)
+# И пользоваться этой информацией нам помогает модуль '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''pytz часовые пояса
+
+import pytz  # $pip install pytz
+
+print(f' Перечень всех доступных таймзон: {pytz.all_timezones}')
+print(f' В перечне содержится информация о {len(pytz.all_timezones)} таймзонах')  # 592 на данный момент
+
+# Как ими пользоваться?
+
+print('Asia/Vladivostok' in pytz.all_timezones)  # True
+vladivostok_time_zone = pytz.timezone('Asia/Vladivostok')
+
+moscow_time = datetime.datetime.today()
+print(f'Московское время {moscow_time}')
+vladivostok_time = moscow_time.astimezone(vladivostok_time_zone)
+print(f'Время во Владивостоке {vladivostok_time}')
+
+
+# Пример.
+# Из двух городов России (Владивосток и Калининград) пришли две заявки с датой и временем (в их местном часовом поясе)
+# Нужно узнать кто из них первым совершил покупку.
+print('Europe/Kaliningrad' in pytz.all_timezones)
+kaliningrad_time_zone = pytz.timezone('Europe/Kaliningrad')
+UTC_time_zone = pytz.utc
+
+request_from_vladivostok_str = '2019-06-15T16:22:00 +1000'
+request_from_kaliningrad_str = '2019-06-15T12:05:30 +0200'
+
+vladivostok_request = datetime.datetime.strptime(request_from_vladivostok_str, '%Y-%m-%dT%H:%M:%S %z')
+kaliningrad_request = datetime.datetime.strptime(request_from_kaliningrad_str, '%Y-%m-%dT%H:%M:%S %z')
+print(f'Время отправки запроса по местному времени Владивостока {vladivostok_request}')
+print(f'Время отправки запроса по местному времени Калининграда {kaliningrad_request}')
+
+# Отформатированную информацию можно приведем к UTC для сравнения:
+vladivostok_request_UTC = vladivostok_request.astimezone(UTC_time_zone)
+kaliningrad_request_UTC = kaliningrad_request.astimezone(UTC_time_zone)
+fisrt_request = vladivostok_request_UTC if kaliningrad_request_UTC > vladivostok_request_UTC else kaliningrad_request_UTC
+print(f'Время первого запроса {fisrt_request}')
+
+if vladivostok_request_UTC > kaliningrad_request_UTC:
+    print('Первым запрос пришёл из Калининграда')
+else:
+    print('Первым запрос пришёл из Владивостока')
+	
+	
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''import calendar
+
+# Позволяет вывести календарь в виде простого текста или в HTML формате.
+
+# Создание строчного календаря:
+calendar_text = calendar.TextCalendar()  # 'str'
+# далее, для отображения, нужно уточнить год и месяц
+print(calendar_text.formatmonth(2025, 1))
+
+# также можно создать HTML-версию календаря
+calendar_HTML = calendar.HTMLCalendar()
+print(calendar_HTML.formatmonth(2025, 1))  # 'calendar.HTMLCalendar'
+
+# Помимо красивого отображения календаря по месяцам,
+# можно также получить доступ к месяцам, неделям и дням заданного года.
+
+# Например мы хотим посчитать сколько рабочих дней (не учитывая праздники) будет в январе 2025
+
+day_iterator = calendar_text.itermonthdays2(2025, 1)
+number_of_working_days = 0
+
+for data, weekday in day_iterator:               # Итератор будет возвращать tuple из 2 цифр
+    if data > 0 and weekday < 5:                 # Номер дня в месяце(0-31) и номер дня в неделе (0-6)
+        number_of_working_days += 1              # 0-ми отмечаются дни из других месяцев,
+                                                 # которые влезли в начало или конец
+print(f'В январе 2025 {number_of_working_days} рабочих дней')
+
+# Помимо итераторов, можно вытаскивать из календаря списки дней в месяце
+
+print(f'Дни февраля 2025 года в списках по неделям {calendar_text.monthdayscalendar(2025, 2)}')
+
+# Кроме прочего доступ есть к названиям месяцев или дней недели
+
+for month in calendar.month_name:
+    print(month)  # цикл последовательно выдаст английские названия месяцев
+
+for day in calendar.day_name:  # тоже самое но с названиями дней недели
+    print(day)
+
+# Более подробно про календарь см https://docs.python.org/3/library/calendar.html	
+	
+	
+	
+	
+	

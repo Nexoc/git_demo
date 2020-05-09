@@ -1,0 +1,335 @@
+class CanFly:
+
+    def __init__(self):
+        self.altitude = 0  # метров
+        self.velocity = 0  # км/ч
+
+    def take_off(self):
+        pass
+
+    def fly(self):
+        pass
+
+    def land_on(self):
+        self.altitude = 0
+        self.velocity = 0
+
+    def __str__(self):
+        return '{} высота {} скорость {}'.format(
+            self.__class__.__name__, self.altitude, self.velocity)
+
+
+class Butterfly(CanFly):
+
+    def take_off(self):
+        self.altitude = 1
+
+    def fly(self):
+        self.velocity = 0.1
+
+
+class Aircraft(CanFly):
+
+    def take_off(self):
+        self.velocity = 300
+        self.altitude = 1000
+
+    def fly(self):
+        self.velocity = 800
+
+
+class Missile(CanFly):
+
+    def take_off(self):
+        self.velocity = 1000
+        self.altitude = 10000
+
+    def land_on(self):
+        self.altitude = 0
+        self.velocity = 0
+        self.destroy_enemy_base()
+
+    def destroy_enemy_base(self):
+        print('БА-БАХ!')
+
+
+# butterfly = Butterfly()
+# print(butterfly)
+# butterfly.take_off()
+# print(butterfly)
+# butterfly.fly()
+# print(butterfly)
+# butterfly.land_on()
+# print(butterfly)
+# #
+missile = Missile()
+print(missile)
+missile.take_off()
+print(missile)
+missile.fly()
+print(missile)
+missile.land_on()
+print(missile)
+
+
+#####################################################################
+
+
+
+# Ко всем ли атрибутам родительского класса можно обратиться?!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+class Parent:
+    class_var_1 = 12
+    _class_var_2 = 23
+    __class_var_3 = 34 # этот типа зашифрован
+
+    def __init__(self):
+        self.var_1 = 45
+        self._var_2 = 56
+        self.__var_3 = 67
+
+    def parent_method(self):
+        print(self.class_var_1)
+        print(self._class_var_2)
+        print(self.__class_var_3)
+        print(self.var_1)
+        print(self._var_2)
+        print(self.__var_3)
+
+
+class Child(Parent):
+
+    def method(self):
+        print(self.class_var_1)
+        print(self._class_var_2)
+        # print(self.__class_var_3)
+        print(self.var_1)
+        print(self._var_2)
+        # print(self.__var_3)
+
+
+obj = Child()
+# obj.parent_method()
+obj.method()
+
+
+############################################################
+
+
+
+# Переопределение методов
+# - используется если у порожденного класса должно отличаться поведение
+class Robot:
+
+    def __init__(self, model):
+        self.model = model
+
+    def __str__(self):
+        return '{} model {}'.format(self.__class__.__name__, self.model)
+
+  
+
+    def operate(self):
+        print('Робот ездит по кругу')
+
+
+class WarRobot(Robot):
+    
+    def __str__(self):
+        return '{} model {}. Стой, стрелять буду!'.format(self.__class__.__name__, self.model)
+
+
+    def operate(self):
+        print('Робот охраняет военный обьект')
+
+
+class VacuumCleaningRobot(Robot):
+
+    def operate(self):
+        print('Робот пылесосит пол')
+
+
+r2d2 = WarRobot(model='R2D2')
+print(r2d2)
+r2d2.operate()
+
+# roomba = VacuumCleaningRobot(model='roomba M505')
+# print(roomba)
+# roomba.operate()
+
+
+
+#############################################################################
+SUPER
+##############################################################################
+
+
+
+# Что делать, если нужно __дополнить__ поведение?
+# Дочерний класс делает то же самое, что и родительский, плюс нечто большее
+
+
+class Robot:
+
+    def __init__(self, model):
+        self.model = model
+
+    def __str__(self):
+        return '{} model {}'.format(self.__class__.__name__, self.model)
+
+    def operate(self):
+        print('Робот ездит по кругу')
+
+
+class VacuumCleaningRobot(Robot):
+
+    def __init__(self, model):
+        super().__init__(model=model)
+        self.dust_bug = 0
+
+    def operate(self):
+        print('Робот пылесосит пол, заполенность мешка для пыли', self.dust_bug)
+
+
+class WarRobot(Robot):
+
+    def __init__(self, model, gun):
+        super().__init__(model=model)
+        self.gun = gun
+
+    def operate(self):
+        super().operate()
+        print('Робот охраняет военный обьект c помощью', self.gun)
+
+
+
+class WarSubmarineRobot(WarRobot):
+
+    def operate(self):
+        super().operate()
+        print('Охрана ведется под водой')
+
+
+# roomba = VacuumCleaningRobot(model='roomba M505')
+# print(roomba)
+# roomba.operate()
+
+# r2d2 = WarRobot(model='R2D2', gun='пулемет')
+# print(r2d2)
+# r2d2.operate()
+
+rc_submarine = WarSubmarineRobot(model='Orbiter', gun='лазер')
+print(rc_submarine)
+rc_submarine.operate()
+
+
+########################################################################################
+
+
+
+# или про роботов
+
+
+class Robot:
+
+    def __init__(self, model):
+        self.model = model
+
+    def __str__(self):
+        return '{} model {}'.format(self.__class__.__name__, self.model)
+
+    def operate(self):
+        print('Робот ездит по кругу')
+
+
+class CanFly:
+
+    def __init__(self):
+        self.altitude = 0  # метров
+        self.velocity = 0  # км/ч
+
+    def take_off(self):
+        self.altitude = 100
+        self.velocity = 300
+
+    def fly(self):
+        self.altitude = 5000
+
+    def land_on(self):
+        self.altitude = 0
+        self.velocity = 0
+
+    def __str__(self):
+        return '{} высота {} скорость {}'.format(
+            self.__class__.__name__, self.altitude, self.velocity)
+
+
+class Drone(Robot, CanFly):
+
+    def __init__(self, model):
+        super(Drone, self).__init__(model=model)
+
+    def operate(self):
+        print('Робот ведет разведку с воздуха')
+
+    def __str__(self):
+        return '{} model {}'.format(self.__class__.__name__, self.model) +\
+               '{} высота {} скорость {}'.format(self.__class__.__name__, self.altitude, self.velocity)
+
+
+orbiter = Drone(model='Orbiter II')
+orbiter.take_off()
+print(orbiter)
+orbiter.fly()
+print(orbiter)
+orbiter.operate()
+print(orbiter)
+orbiter.land_on()
+print(orbiter)
+
+
+###########################################################################
+
+
+# -*- coding: utf-8 -*-
+
+# Теперь немного умных слов
+
+# Класс(Class): Определенный программистом прототип программируемого
+# объекта с набором атрибутов(переменных и методов), которые описывают
+# данный объект. Доступ к аттрибутам и методам осуществляется через точку
+
+# Переменная класса(Class variable): Переменная, доступная для всех экземпляров данного
+# класса. Определяется внутри класса, но вне любых методов класса.
+
+# Экземпляр класса(Instance): Отдельный объект - представитель определенного класса.
+
+# Переменная экземпляра класса(Instance variable): Переменная определенная внутри
+# медота класса, принадлежащая только к этому классу.
+
+# Метод(Method): Особая функция, определенная внутри класса.
+
+# Наследование(Inheritance): Передача аттрибутов и методов родительского класса дочерним
+# классам.
+
+# Перегрузка функций(Function overloading): Изменение работы метода, унаследованного
+# дочерним классом от родительского класса.
+
+# Перегрузка операторов(Operator overloading): Определение работы операторов  с экземплярами
+# данного класса.
+
+
+# Если хочется еще крутой теории - https://goo.gl/9JxMcn
+
+# Изученные нами принципы ООП
+#   абстракция - выделение классов обьектов
+#   наследование - иерархия классов
+#   инкапсуляция - сокрытие данных внутри обьекта
+#   полиморфизм - множественное наследование
+
+
+
+#########################################################################
+
+
