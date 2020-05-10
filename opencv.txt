@@ -30,6 +30,7 @@ elif k == ord('s'): # wait for 's' key to save and exit
     cv2.destroyAllWindows()
 
 
+
 '''''''''''''''''
 def viewImage(image, name_of_window):
     cv2.namedWindow(name_of_window, cv2.WINDOW_NORMAL)
