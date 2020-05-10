@@ -217,7 +217,7 @@ rm -- -myfile				# if you want to remove file with "-" you have to write --
 
 ###############################################################################################
 
-					Link
+					Links
 
 link 
 -hard link
@@ -1228,9 +1228,6 @@ sudo quotacheck -mavug				# quota create 2 files aquota.group and aquota.users
 quota -vu lisa					# info
 
 
-
-
-
 sudo quotaon -v /				# turn on quota on the root (/) filesystem
 qoutaon -a
 
@@ -1633,6 +1630,72 @@ Also configure an IPv6 address for internal use
 
 
 							SSH
+
+
+For Ubuntu you HAVE TO install first
+
+sudo apt install openssh-server
+
+cd /etc/ssh/
+
+sshd_config		# for sshd processes, server configuration
+
+ssh_config 		# config for ssh client
+
+vi ssh_config
+
+systemctl 		# 
+
+systemctl status	#
+
+systemctl status sshd	# 
+
+systemctl stop sshd	# stop command
+
+systemctl start sshd
+
+systemctl restart sshd	#
+
+systemctl enable sshd	#
+
+systemctl disable sshd	#
+
+
+
+ps -ef | grep sshd		# show sshd
+
+man ssh
+
+ufw allow ssh			# if firewall is enabled, make sure to open the SSH port
+
+
+########  		CONECT SSH
+
+
+ssh 127.0.0.1			# conect to 127.0.0.1 ( it is my ip )
+
+ssh anna@127.0.0.1		# log in as anna
+
+exit				# to exit
+
+ssh -X anna@127.0.0.1		# login as anna with grafical application
+
+cd ~/.ssh			# 
+
+ls
+
+know_hosts
+
+cat know_hosts			#
+
+ssh-keygen			#
+
+/home/anna/.ssh/id_rsa.pub
+
+/home/anna/.ssh/id_rsa
+
+
+ssh-copy-id 127.0.0.1		# to automatical connect with a server 
 
 
 
