@@ -1,2 +1,5 @@
 # git_demo
-just trying to learn
+
+Python lessons in the python folder.
+
+My drafts in the notebook folder.
