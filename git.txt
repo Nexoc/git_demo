@@ -20,7 +20,7 @@ git config					# config
 
 git config --global user.email "dav@mail.com"	#
 
-git confog --global user.name "Mar"		#
+git config --global user.name "Mar"		#
 
 git commit -m "Added hello.txt"			# make commit
 
