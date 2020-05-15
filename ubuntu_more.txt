@@ -1698,6 +1698,228 @@ ssh-keygen			#
 ssh-copy-id 127.0.0.1		# to automatical connect with a server 
 
 
+			To copy from or to the host
+
+
+scp /etc/hosts 127.0.0.1:/tmp			# copy etc hosts failes to the host
+
+scp 127.0.0.1:/etc/passwd .			# from host copy passwd to . (where i am now)
+
+
+
+rsync -avz /tmp anna@127.0.0.1:/home/mar/tmp	# when you wanna copy dir
+
+
+
+systemctl status sshd
+
+sudo vi /etc/ssh/sshd_config			# permissions config
+
+after you have to:
+systemctl restart sshd				# to restart sshd
+
+
+
+
+###########################################################################################################
+
+
+
+					firewall
+
+
+https://linuxconfig.org/how-to-configure-firewall-in-ubuntu-18-04
+
+man ufw
+
+sudo apt-get install ufw
+
+sudo ufw status				# status
+
+sudo ufw status verbose
+
+sudo ufw enable				# enable
+
+sudo ufw disable
+
+
+
+sudo ufw allow ssh					# in
+
+sudo ufw reject out ssh					# out
+
+sudo ufw delete reject out ssh 				# delete rule
+
+sudo ufw deny proto tcp from 192.168.4.245 to any port 22 # IP baned to 22 port	
+
+sudo ufw logging on					# login on
+
+
+
+sudo vi /etc/default/ufw		# Then make sure IPV6 is set to yes, like so: IPV6=yes
+
+sudo ufw default deny outgoing		# 
+
+sudo ufw app list			# what is runing
+
+sudo ufw app info ‘<app_name>’		# 
+
+sudo ufw allow ssh
+
+sudo ufw allow http
+
+sudo ufw allow 80/tcp
+
+sudo ufw allow 'HTTP'
+
+sudo ufw allow 1000:2000/tcp
+
+sudo ufw allow 3000:4000/udp
+
+sudo ufw allow from 192.168.1.104
+
+sudo ufw allow from 192.168.1.104 to any port 22
+
+sudo ufw allow from 192.168.1.0/24 to any port 3306
+
+sudo ufw allow in on eth1 to any port 9992
+
+sudo ufw deny from 192.168.1.0/24
+
+sudo ufw deny from 192.168.1.0/24 to any port 80
+
+
+
+sudo ufw delete 2
+
+sudo ufw delete allow 22/tcp
+
+sudo ufw reset
+
+
+'''''''''''''''''''''''''''''''''''
+
+man iptables
+
+    iptables
+
+	↓
+- INPUT
+- OUTPUT
+-FORWARD
+
+iptables {-A|I} chain [-i/o ifau] [-s/d ipaddr] [-p udp|tcp|icmp[--dpart|sport number...]] -j [LOG|ACCEPT|DROP|REJECT]
+
+ -A append -I insert 
+
+-s 10.0.0.0/24
+
+-p -> protocol ->
+
+-p tcp --dport 22
+
+-j jump 
+
+
+
+
+
+sudo iptables -A INPUT -s 10.0.0.0/24 -p tcp --dport 22 -j ACCEPT
+
+iptables -L				# show all 
+
+iptables -P INPUT DROP			# close all input
+
+iptables -P OUTPUT DROP			# close all output
+
+iptables -A INPUT -i lo -j ACCEPT	# -A add to INPUT -i lo (incomming interface)
+
+iptables -A OUTPUT -o lo -j ACCEPT	# -o lo (output loopback interface)
+
+sudo iptables -L -v			# to see everything
+
+sudo iptables -A INPUT -p tcp --dport 22 -j ACCEPT	# -p tcp --dport22 -> ssh trafic for input
+
+sudo iptables -A OUTPUT -m state --state ESTABLISHED,RELATED -j ACCEPT # ssh trafic for output
+
+sudo iptables -A OUTPUT -p tcp --dport 22 -j ACCEPT			# ssh trafic fot output
+
+sudo iptables -A INPUT -m state --state ESTABLISHED,RELATED -j ACCEPT
+
+now it's works
+
+
+
+''''''''''''''''''''''''''''
+webtrafic
+
+iptables -A OUTPUT -p tcp --dport 80 -j ACCEPT			# for webtrafic
+
+iptables -A OUTPUT -p udp --dport 53 -j ACCEPT			# for dns
+
+'''''''''''''''''''''''''''''
+iptables -A INPUT -p udp --dport 123 -j ACCEPT			# for time synchron input
+iptables -A OUTPUT -p udp --dport 123 -j ACCEPT			# for time synchr output
+
+''''''''''''''''''''''''''''''''''''''
+save
+
+iptables-save > /etc/sysconfig/iptables				# save
+
+''''''''''''''''''''''''''''''''''
+
+sudo apt install iptables-services
+
+#########################################################################################################
+
+
+					TIME
+
+
+hwclock (bios) utc
+	↓
+system clock
+	
+NTP server (ntpd)
+''''''''''''''''''''''''''''''
+
+sudo hwclock				# bios clock
+
+date					# date
+
+date -s 19:15				# change the time to 19:15
+
+hwclock --systohc			# synchronization sys to hc
+
+hwclock --hctosys			# synchronization hc to sys
+
+
+timedatectl				# show all info time on you comp
+
+timedatectl --help
+
+timedatectl set-ntp on
+timedatectl set-ntp no
+
+stratum
+iburst
+'''''''''''''''''''''''''''''''''''''''''''
+
+ps aux | grep ntp
+
+ntpd
+ntpq
+
+'''''''''''''''''''''''''''''''''''''''''''''''
+137
+
+
+
+
+
+
+
+
 
 
 
