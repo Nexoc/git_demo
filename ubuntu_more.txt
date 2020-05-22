@@ -1926,6 +1926,197 @@ ntpq
 kernel →  pid 1 : systemd → after all proc
 
 
+sleep 600				# sleep 600 sek
+clst+z					# move to the background
+
+bg					# show background
+
+sleep 700 &				# & -> run as bg
+
+jobs					# show all bg jobs
+
+fg					# front ground
+
+fg 1					# fg number
+
+cntrl+c					# cansel jobs
+
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
+				TOP - processes
+
+top - 18:33:42 up 1 day,  3:58,  1 user,  load average: 0,06, 0,03, 0,00
+
+top -> time
+
+log in how long -> up 1 day and 3:58 min
+
+user 
+
+load average : 
+0,06 -> for last 1 min
+0,03 -> for last 5 min
+0,00 -> for last 15 min
+
+top
+
+push 1 and you can see the all Cpu
+
+
+Tasks: 249 total,   4 running, 199 sleeping,   0 stopped,   0 zombie
+%Cpu(s): 36,5 us (USER SPACE), 63,5 sy(SYSTEM SPACE),  0,0 ni,  0,0 id,  0,0 wa(WAIT),  0,0 hi,  0,0 si,  0,0 st
+KiB Mem :  4030468 total,  1216572 free,  1144096 used,  1669800 buff/cache
+KiB Swap:   483800 total,   483800 free,        0 used.  2576356 avail Mem 
+
+
+PID USER      PR  NI    VIRT    RES    SHR S  %CPU %MEM     TIME+ COMMAND 
+
+PID 		-> unic pronic ID		
+USER		-> user
+PR 		-> priority
+NI    		->
+VIRT		-> virtual memory
+RES		-> resident memory
+SHR		-> shared memory
+S 		-> status S sleep R run
+%CPU		-> Cpu 
+%MEM		-> memory usses 
+TIME+ 		-> how long
+COMMAND		-> related command
+
+
+top -u student	-> show all processes from user student
+
+
+'''''''''''''''''''''''''''''''''''''''''''''''
+
+top
+and on this press f
+
+on new, you can change how it sorts -> press s (sort)
+
+
+'''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
+ps aux | less
+
+ps aux | grep sshd
+
+ps -ef | less
+
+ps -e -o pid,args --forest | less
+
+ps aux --sort pmem
+
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
+				priority
+
+top
+
+NI (nice command)
+
+press "r" to renice
+
+first enter
+
+second from -20 till 19	# -5	(-20 max priority)	
+
+
+
+nice --help
+
+nice -n 5 dd if=/dev/zero of=/dev/null &		# change dd process with priority 5
+
+
+renice --help
+
+renice -n 5 14053					# renice +5 for process number 14053
+
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
+				Signals
+
+man 7 signal
+
+       SIGHUP        1       Term    Hangup detected on controlling terminal
+                                     or death of controlling process
+
+       SIGINT        2       Term    Interrupt from keyboard
+       SIGQUIT       3       Core    Quit from keyboard
+       SIGILL        4       Core    Illegal Instruction
+       SIGABRT       6       Core    Abort signal from abort(3)
+       SIGFPE        8       Core    Floating-point exception
+
+       SIGKILL       9       Term    Kill signal
+
+       SIGSEGV      11       Core    Invalid memory reference
+       SIGPIPE      13       Term    Broken pipe: write to pipe with no
+                                     readers; see pipe(7)
+       SIGALRM      14       Term    Timer signal from alarm(2)
+
+       SIGTERM      15       Term    Termination signal
+
+       SIGUSR1   30,10,16    Term    User-defined signal 1
+       SIGUSR2   31,12,17    Term    User-defined signal 2
+       SIGCHLD   20,17,18    Ign     Child stopped or terminated
+       SIGCONT   19,18,25    Cont    Continue if stopped
+       SIGSTOP   17,19,23    Stop    Stop process
+       SIGTSTP   18,20,24    Stop    Stop typed at terminal
+       SIGTTIN   21,21,26    Stop    Terminal input for background process
+       SIGTTOU   22,22,27    Stop    Terminal output for background process
+
+
+
+
+top
+
+push "k"
+
+PID to signal/kill [default pid = 1543] # hier you have to write number of process
+
+after signal 9 to kill process, or 15 to kill nicely
+
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
+ps aux | grep dd 
+
+kill 14053
+
+or
+
+killall dd		# kill all dd processes
+
+!dd			# last command with dd 
+
+kill -9 16742		# to kill process
+
+ps aux |grep dd
+
+pidof dd		# show number of process ID
+
+kill $(pidof dd)	# kill proc PID of "name"
+
+''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
